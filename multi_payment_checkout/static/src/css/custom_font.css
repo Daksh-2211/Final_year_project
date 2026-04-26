@@ -1,0 +1,47 @@
+a[href*="/pobytove-tabory"],
+a[href*="/denne-tabory-bratislava"] {
+    color: #FAD100 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a[href*="/pobytove-tabory"]:hover,
+a[href*="/denne-tabory-bratislava"]:hover {
+    color: #FFFFFF !important;
+}
+
+.menu-section,
+.menu-section .nav-link,
+.menu-section a,
+.menu-section span {
+    font-family: 'FinalSix_Black', sans-serif !important;
+}
+
+div.top.promotion[data-id="1"] {
+    background: #ffffff !important;
+    text-align: center;
+}
+
+div.top.promotion[data-id="1"] font,
+div.top.promotion[data-id="1"] a,
+div.top.promotion[data-id="1"] span {
+    color: #ff0000 !important;
+    font-family: 'FinalSix_Black', sans-serif !important;
+}
+
+.close_promotion {
+    color: #ff0000 !important;
+    opacity: 1 !important;
+}
+
+a[href="/seller"] {
+    display: none !important;
+}
+
+div.o_grid_item[style*="grid-area: 5 / 2 / 6 / 3"] {
+    display: none !important;
+}
+
+div.o_grid_item[style*="grid-area: 5 / 8 / 6 / 9"] {
+    display: none !important;
+}

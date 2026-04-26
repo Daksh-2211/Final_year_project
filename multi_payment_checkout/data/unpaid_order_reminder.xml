@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_unpaid_order_reminder" model="mail.template">
+            <field name="name">Sale Order: Unpaid Reminder (14 days)</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Vaša objednávka je pripravená – chýba už len posledný krok</field>
+            <field name="email_from">taborcata@taborcata.sk</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="description">Reminder email for unpaid orders after 14 days</field>
+            <field name="body_html" type="html">
+                <div style="font-size:13px;">
+                    <p>
+                        Dobrý deň <t t-out="object.partner_id.name"/>,
+                    </p>
+                    <p>
+                        veľmi nás teší Váš záujem o naše služby. Vašu objednávku sme v systéme úspešne prijali a už sa nevieme dočkať, kedy sa pustíme do jej vybavenia.
+                    </p>
+                    <p>
+                        Všimli sme si však, že k dnešnému dňu neevidujeme úhradu za vybrané položky. Možno ste na to v každodennom zhone len pozabudli, alebo ste si svoje rozhodnutie rozmysleli, v takom prípade prosím považujte e-mail za bezpredmetný.
+                    </p>
+                    <p>
+                        <strong>Dôležité informácie:</strong>
+                    </p>
+                    <p>
+                        <strong>Lehota na úhradu:</strong> Objednávku pre Vás držíme v platnosti 14 dní od jej vytvorenia.
+                    </p>
+                    <p>
+                        <strong>Storno:</strong> Ak platbu do uplynutia tohto termínu neobdržíme, budeme musieť Vašu objednávku, bohužiaľ, automaticky stornovať, aby sme uvoľnili miesto ďalším záujemcom.
+                    </p>
+                    <p>
+                        Ak by ste mali akýkoľvek problém s platbou alebo potrebujete s niečím poradiť, neváhajte nám odpísať priamo na tento e-mail. Radi Vám pomôžeme.
+                    </p>
+                    <p>
+                        <strong>Platobné údaje pre rýchlu kontrolu:</strong><br/>
+                        <strong>Suma:</strong> <t t-out="format_amount(object.amount_total, object.currency_id)"/><br/>
+                        <strong>Variabilný symbol:</strong> <t t-out="object.name.replace('S','').replace('O','')"/><br/>
+                        <strong>IBAN:</strong> SK57 8330 0000 0026 0290 2887
+                    </p>
+                    <p>
+                        Ďakujeme za Vašu dôveru a prajeme Vám pekný deň!
+                    </p>
+                    <p>
+                        S pozdravom,<br/>
+                        <strong>Tím Táborčatá</strong><br/>
+                        0948 748 999
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <record id="ir_cron_send_unpaid_order_reminder" model="ir.cron">
+            <field name="name">Sale Order: Send Unpaid Reminder (14 days)</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model._scheduled_send_unpaid_order_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

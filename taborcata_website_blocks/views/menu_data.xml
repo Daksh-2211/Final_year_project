@@ -1,0 +1,223 @@
+<odoo>
+    <data noupdate="1">
+        <record id="menu_denne_tabory_custom" model="website.menu">
+            <field name="name">DENNÉ TÁBORY</field>
+            <field name="url">/denne-tabory-bratislava</field>
+            <field name="parent_id" eval="4"/>
+            <field name="sequence" eval="1"/>
+            <field name="website_id" eval="1"/>
+            <field name="is_mega_menu" eval="True"/>
+            <field name="mega_menu_content" type="html">
+
+                <section class="taborcata-mega-wrapper">
+                    <div class="tabor-mobile d-lg-none">
+                        <div id="denneTaboryMobile">
+
+                            <!-- PETRŽALKA -->
+                            <div class="mobile-location">
+                                <a data-bs-toggle="collapse" href="#petrzalkaSub">PETRŽALKA</a>
+                                <a data-bs-toggle="collapse" href="#petrzalkaSub">PETRŽALKA</a>
+                                <div id="petrzalkaSub" class="collapse" data-bs-parent="#denneTaboryMobile">
+                                    <a href="/denny-umelecky-tabor-petrzalka" class="cat umelecky">Umelecký</a>
+                                    <a href="/denny-tabor-vedatori-petrzalka" class="cat vedecky">Vedecký</a>
+                                    <a href="/denny-tabor-capoeira-blast-petrzalka" class="cat capoeria">Capoeira
+                                        Blast
+                                    </a>
+                                </div>
+                            </div>
+
+
+                            <!-- RUŽINOV -->
+                            <div class="mobile-location">
+                                <a data-bs-toggle="collapse" href="#ruzinovSub">RUŽINOV</a>
+                                <div id="ruzinovSub" class="collapse" data-bs-parent="#denneTaboryMobile">
+                                    <a href="/denny-umelecky-tabor-ruzinov" class="cat umelecky">Umelecký</a>
+                                    <a href="/denne-tabory-vedatori-ruzinov" class="cat vedecky">Vedecký</a>
+                                    <a href="/denny-tabor-capoeira-blast-ruzinov" class="cat capoeria">Capoeira Blast
+                                    </a>
+                                    <a href="/denny-tabor-sebaobrana-s-lasergame-ruzinov" class="cat lasergame">
+                                        Sebaobrana s
+                                        Lasergame
+                                    </a>
+                                    <a href="/laserarena-camp" class="cat laserarena">LASERARENA CAMP</a>
+                                </div>
+                            </div>
+
+                            <!-- LAMAČ -->
+                            <div class="mobile-location">
+                                <a data-bs-toggle="collapse" href="#lamacSub">LAMAČ</a>
+                                <div id="lamacSub" class="collapse" data-bs-parent="#denneTaboryMobile">
+                                    <a href="/denny-umelecky-tabor-lamac" class="cat umelecky">Umelecký</a>
+                                    <a href="/denny-tabor-vedatori-lamac" class="cat vedecky">Vedecký</a>
+                                    <a href="/denny-tabor-spacepark" class="cat spacepark">Spacepark camp</a>
+                                </div>
+                            </div>
+
+                            <!-- RAČA -->
+                            <div class="mobile-location">
+                                <a data-bs-toggle="collapse" href="#racaSub">RAČA</a>
+                                <div id="racaSub" class="collapse" data-bs-parent="#denneTaboryMobile">
+                                    <a href="/denny-umelecky-tabor-raca" class="cat umelecky">Umelecký</a>
+                                    <a href="/denny-tabor-vedatori-raca" class="cat vedecky">Vedecký</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-none d-lg-block">
+                        <div class="container">
+                            <div class="row text-center tabor-top">
+
+                                <!-- PETRŽALKA -->
+                                <div class="col-md-3 tabor-item">
+                                    <a href="/denne-tabory-petrzalka" class="location">PETRŽALKA</a>
+                                    <div class="dropdown-box">
+                                        <div class="dropdown-group">
+                                            <a href="/denny-umelecky-tabor-petrzalka" class="cat umelecky">Umelecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-vedatori-petrzalka" class="cat vedecky">Vedecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-capoeira-blast-petrzalka" class="cat capoeria">
+                                                Capoeira
+                                                Blast
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RUŽINOV -->
+                                <div class="col-md-2 tabor-item">
+                                    <a href="/denne-tabory-ruzinov" class="location">RUŽINOV</a>
+                                    <div class="dropdown-box">
+                                        <div class="dropdown-group">
+                                            <a href="/denny-umelecky-tabor-ruzinov" class="cat umelecky">Umelecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denne-tabory-petrzalka-vedatori" class="cat vedecky">Vedecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-capoeira-blast-ruzinov" class="cat capoeria">Capoeira
+                                                Blast
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-sebaobrana-s-lasergame-ruzinov" class="cat lasergame">
+                                                Sebaobrana s Lasergame
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/laserarena-camp" class="cat laserarena">LASERARENA CAMP</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- LAMAČ -->
+                                <div class="col-md-2 tabor-item">
+                                    <a href="/denne-tabory-lamac" class="location">LAMAČ</a>
+                                    <div class="dropdown-box">
+                                        <div class="dropdown-group">
+                                            <a href="/denny-umelecky-tabor-lamac" class="cat umelecky">Umelecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-vedatori-lamac" class="cat vedecky">Vedecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-spacepark" class="cat spacepark">Spacepark camp</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RAČA -->
+                                <div class="col-md-2 tabor-item">
+                                    <a href="/denne-tabory-raca" class="location">RAČA</a>
+                                    <div class="dropdown-box">
+                                        <div class="dropdown-group">
+                                            <div class="dropdown-group">
+                                                <a href="/denny-umelecky-tabor-raca" class="cat umelecky">Umelecký</a>
+                                            </div>
+                                            <div class="dropdown-group">
+                                                <a href="/denny-tabor-vedatori-raca" class="cat vedecky">Vedecký</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Karlova Ves -->
+                                <div class="col-md-3 tabor-item">
+                                    <a href="/denne-tabory-karlova-ves" class="location">KARLOVA VES</a>
+                                    <div class="dropdown-box">
+                                        <div class="dropdown-group">
+                                            <a href="/denny-umelecky-tabor-karlova-ves" class="cat umelecky">Umelecký
+                                            </a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-vedatori-karlova-ves" class="cat vedecky">Vedecký</a>
+                                        </div>
+                                        <div class="dropdown-group">
+                                            <a href="/denny-tabor-minigolf-karlova-ves" class="cat minigolf">Minigolf
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </field>
+        </record>
+
+        <record id="menu_pobytove_tabory_custom" model="website.menu">
+            <field name="name">POBYTOVÉ TÁBORY</field>
+            <field name="url">/pobytove-tabory</field>
+            <field name="parent_id" eval="4"/>
+            <field name="sequence" eval="2"/>
+            <field name="website_id" eval="1"/>
+            <field name="is_mega_menu" eval="False"/>
+        </record>
+
+        <record id="menu_pobytove_sub_1" model="website.menu">
+            <field name="name">Čarodejnícka Škola</field>
+            <field name="url">/carodejnicka-skola</field>
+            <field name="parent_id" ref="menu_pobytove_tabory_custom"/>
+            <field name="website_id" eval="1"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <record id="menu_pobytove_sub_2" model="website.menu">
+            <field name="name">Kemp Pandora</field>
+            <field name="url">/stanovy-tabor-kemp-pandora</field>
+            <field name="parent_id" ref="menu_pobytove_tabory_custom"/>
+            <field name="website_id" eval="1"/>
+            <field name="sequence" eval="20"/>
+        </record>
+
+        <record id="menu_pobytove_sub_3" model="website.menu">
+            <field name="name">Členstvo Táborčatá</field>
+            <field name="url">/clenstvo</field>
+            <field name="parent_id" ref="menu_pobytove_tabory_custom"/>
+            <field name="website_id" eval="1"/>
+            <field name="sequence" eval="30"/>
+        </record>
+
+        <record id="menu_kros_events" model="website.menu">
+            <field name="name">B2B Client Events</field>
+            <field name="url">/kros-camps</field>
+            <field name="website_id" eval="1"/>
+            <field name="sequence" eval="30"/>
+            <field name="group_ids" eval="[(4, ref('base.group_no_one'))]"/>
+        </record>
+
+        <record id="menu_objednat_tabor_btn" model="website.menu">
+            <field name="name">OBJEDNAŤ TÁBOR</field>
+            <field name="url">/event?cta=order_camp</field>
+            <field name="parent_id" eval="4"/>
+            <field name="sequence" eval="4"/>
+            <field name="website_id" eval="1"/>
+        </record>
+    </data>
+
+</odoo>

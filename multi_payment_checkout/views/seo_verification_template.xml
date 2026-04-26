@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="seo_google_search_console" inherit_id="website.layout" name="Google Search Console Verification">
+        <xpath expr="//head" position="inside">
+            <t t-if="request and request.httprequest.path == '/'">
+                <meta name="google-site-verification" content="fNwJHPGoI4yipf3OvJfkN3ccAsXEh_HLbRIdPnlYwY4"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

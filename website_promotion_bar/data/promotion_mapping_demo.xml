@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+    <data noupdate="0">
+        <record id="promotion_mapping_1" model="promotion.mapping">
+            <field name="page_id" model="ir.ui.view" eval="obj().search([('key', '=', 'website.homepage'), ('website_id', '!=', False)], limit=1).id"/>
+            <field name="position">top</field>
+            <field name="date_start">2019-06-01</field>
+            <field name="visibility">public</field>
+            <field name="is_multi_promotion">False</field>
+            <field name="publish">True</field>
+            <field name="content"><![CDATA[
+                <p style="text-align: center;">
+                    <font style='color: rgb(115, 24, 66); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-size: 20px; font-weight: 600;'>
+                        !!! NOW MANAGE YOUR MAGENTO STORE USING ODOO ERP!!!
+                    </font>
+                    <br/>
+                    <br/>
+                    <font style="">
+                        <span style='color: rgb(255, 0, 0); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-size: 20px;'>
+                            NOW, Run Your Magento Store Operations Using Odoo With Our Latest Update Of
+                        </span>
+                    </font>
+                    <br/>
+                    <br/>
+                    <a href="https://store.webkul.com/Magento-OpenERP-Bridge.html" class="btn btn-success" title="" target="_blank">
+                        Odoo Bridge For Magento Module
+                    </a>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <font style='color: rgb(255, 0, 0); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; font-size: 18px; font-weight: 600;'>
+                        ..... Available For Both Magento 1.X and 2.x .....
+                    </font>
+                    <br/>
+                </p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * payment_custom
+#
+# Translators:
+# Wil Odoo, 2025
+#
+# Weblate <noreply-mt-weblate@weblate.org>, 2026.
+
+#. module: payment_custom
+#: model_terms:ir.ui.view,arch_db:payment_custom.custom_state_header
+msgid "Finalize your payment"
+msgstr "dokončite vašu platbu"
+
+#. module: payment
+#: model_terms:ir.ui.view,arch_db:payment.state_header
+msgid "Skip <i class=\"oi oi-arrow-right ms-1 small\"/>"
+msgstr "preskočiť <i class=\"oi oi-arrow-right ms-1 small\"/>"
+
+#. module: payment_custom
+#: model_terms:ir.ui.view,arch_db:payment_custom.custom_state_header
+msgid "<strong class=\"mt-auto\">Communication: </strong>"
+msgstr "<strong class=\"mt-auto\">Objednávka: </strong>"
+
+#. module: payment
+#: model_terms:ir.ui.view,arch_db:payment.state_header
+msgid "Please wait..."
+msgstr "prosím čakajte"
+
+#. module: payment_custom
+#: model_terms:ir.ui.view,arch_db:payment_custom.custom_state_header
+msgid ""
+"<small class=\"text-center text-wrap lh-sm\">Scan me in your banking app</"
+"small>"
+msgstr ""
+"<small class=\"text-center text-wrap lh-sm\">Nascanuj ma vo svojej "
+"bankovej aplikácií</small>"
+
+#. module: website_event_sale
+#: code:addons/website_event_sale/models/sale_order.py:0
+msgid "You cannot raise manually the event ticket quantity in your cart"
+msgstr "Zvýšenie počtu táborov v rámci existujúcej objednávky nie je, bohužiaľ, možné. Prosíme Vás o vytvorenie novej objednávky."

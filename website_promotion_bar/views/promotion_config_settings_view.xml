@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+    <data>
+        <record id="view_promotion_config_settings_form" model="ir.ui.view">
+            <field name="name">Promotion Configuration Form</field>
+            <field name="model">promotion.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="Promotion Configuration" class="oe_form_configuration">
+                    <h2 style="background-color: rgba(211, 211, 211, 0.15);padding:5px;margin-left: 5px;margin-right: -15px;">Website Promotion Bar</h2>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_is_active" type="object" class="oe_stat_button" icon="fa-check">
+                                <div class="o_stat_info">
+                                    <field name="is_active" invisible="1"/>
+                                    <span class="o_stat_text" invisible="is_active"> Active</span>
+                                    <span class="o_stat_text text-danger" invisible="not is_active"> Archive</span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" text="Active" bg_color="bg-success" invisible="not is_active" />
+                        <widget name="web_ribbon" text="Archived" bg_color="bg-danger" invisible="is_active"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" required="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="background_color"/>
+                                <field name="top_bottom_height"/>
+                                <field name="top_bottom_width"/>
+                                <field name="left_right_height"/>
+                                <field name="left_right_width"/>
+                            </group>
+                            <group>
+                                <field name="allow_cross"/>
+                                <field name="allow_pop_up"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_promotion_config_settings_list" model="ir.ui.view">
+            <field name="name">Configurations</field>
+            <field name="model">promotion.config.settings</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="is_active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="website_promotion_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Website Promotion</field>
+            <field name="res_model">promotion.config.settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_promotion_config_settings_form"/>
+        </record>
+
+        <record id="config_webkul_website_addons_form_inherit" model="ir.ui.view">
+            <field name="name">Webkul Website Addons Setting</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="website_webkul_addons.config_webkul_website_addons_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//td[@name='module_website_promotion_bar']" position="replace">
+                    <td name="module_website_promotion_bar">
+                        <button type="object" name="get_promotion_configuration_view" class="oe_link" string="Configuration"></button>
+                    </td>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

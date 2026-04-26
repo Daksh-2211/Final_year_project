@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_link_sale" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='page']" position="inside">
+            <div class="row" t-if="doc.get_payment_link_url_button() and report_type == 'pdf'">
+                <div class="col-4 pull-left" style="margin-top: 20px;">
+                    <a t-att-href="doc.payment_link_url or ''" target="_blank" class="btn" t-attf-style="background-color: {{doc.company_id.primary_color or '#875A7B'}}; padding: 10px 20px; text-decoration: none; border-radius: 5px; color: white;">
+                    Pay Now Online
+                    </a>
+                </div>
+            </div>
+            <div class="row" t-if="doc.get_payment_link_url_qrcode() and report_type == 'pdf'">
+                <div class="col-4 pull-left" style="margin-top: 10px;">
+                    <div id="qrcode">
+                        <p>
+                            <strong class="text-center">Scan to Pay Online</strong><br />
+                            <img t-att-src="doc.build_qr_code_base64()"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

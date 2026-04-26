@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_product_hide_form" model="ir.ui.view">
+         <field name="name">res.config.settings.view.form.product</field>
+         <field name="model">res.config.settings</field>
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <form>
+                 <sheet>
+                     <group>
+                          <field name="product_ids" widget="many2many_tags"/>
+                     </group>
+                 </sheet>
+                 <footer>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                 </footer>
+             </form>
+         </field>
+     </record>
+
+     <record id="res_config_event_hide_form" model="ir.ui.view">
+         <field name="name">res.config.settings.view.form.event</field>
+         <field name="model">res.config.settings</field>
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <form>
+                 <sheet>
+                     <group>
+                          <field name="event_ids" widget="many2many_tags"/>
+                     </group>
+                 </sheet>
+                 <footer>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                 </footer>
+             </form>
+         </field>
+     </record>
+
+    <record id="action_product_hide" model="ir.actions.act_window">
+        <field name="name">Select products to hide</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="res_config_product_hide_form"/>
+        <field name="target">new</field>
+    </record>
+
+     <record id="action_event_hide" model="ir.actions.act_window">
+        <field name="name">Select events to hide</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="res_config_event_hide_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="config_res_config_settings_form" model="ir.ui.view">
+        <field name="name">Product and Event Hide Setting</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='website_info_settings']" position="inside">
+
+                <setting string="Hidden Content" help="Manage visibility of products and events.">
+                    <div class="content-group">
+                        <div class="row">
+                            <label class="col-lg-4" string="Hidden Products" for="product_ids"/>
+                            <field name="product_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" />
+                        </div>
+                        <div class="row mt4">
+                             <div class="col-lg-4"></div>
+                             <div class="col-lg-8">
+                                <button type="action" name="%(action_product_hide)d" string="Setup Products" icon="fa-arrow-right" class="oe_link"/>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="content-group mt16">
+                        <div class="row">
+                            <label class="col-lg-4" string="Hidden Events" for="event_ids"/>
+                            <field name="event_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                        </div>
+                         <div class="row mt4">
+                             <div class="col-lg-4"></div>
+                             <div class="col-lg-8">
+                                <button type="action" name="%(action_event_hide)d" string="Setup Events" icon="fa-arrow-right" class="oe_link"/>
+                             </div>
+                        </div>
+                    </div>
+                </setting>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="website_module_view_form" model="ir.ui.view">
+        <field name="name">Product Hide Setting</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='logo']" position="replace">
+                <field name="product_ids" widget="many2many_tags"/>
+                <field name="event_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

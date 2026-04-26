@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="invoice_add_bank_note" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//p[@name='payment_communication']/t[@t-if='o.partner_bank_id']" position="inside">
+
+            <br/>
+            <small>
+                Vážený zákazník úhrada ide na účet spoločnosti Táborčatá s. r. o.,
+                ktorá to potom distribuje medzi svojich partnerov.
+            </small>
+
+        </xpath>
+
+    </template>
+
+</odoo>

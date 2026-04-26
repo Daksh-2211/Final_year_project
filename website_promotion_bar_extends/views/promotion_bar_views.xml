@@ -1,0 +1,14 @@
+<odoo>
+    <record id="promotion_mapping_form_inherit_menu" model="ir.ui.view">
+        <field name="name">promotion.mapping.form.menu</field>
+        <field name="model">promotion.mapping</field>
+        <field name="inherit_id" ref="website_promotion_bar.view_promotion_mapping_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='page_id']" position="replace">
+                <field name="menu_id"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

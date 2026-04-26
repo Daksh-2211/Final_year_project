@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hide_users,website.product.hide,base.model_res_config_settings,,1,0,0,0
+access_hide_admin,website.product.hide,base.model_res_config_settings,sales_team.group_sale_manager,1,1,1,1

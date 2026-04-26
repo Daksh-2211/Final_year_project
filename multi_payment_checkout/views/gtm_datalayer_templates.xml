@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="gtm_begin_registration"
+              name="GTM: begin_registration dataLayer push"
+              inherit_id="website_event.modal_ticket_registration">
+        <xpath expr="//div[@id='modal_ticket_registration']" position="inside">
+            <t t-if="gtm_begin_registration_json">
+                <script type="text/javascript">
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push(<t t-out="gtm_begin_registration_json"/>);
+                </script>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="gtm_purchase_confirmation"
+              name="GTM: purchase dataLayer push (paid tickets)"
+              inherit_id="website_sale.confirmation">
+        <xpath expr="//div[@id='oe_structure_website_sale_confirmation_1']" position="before">
+            <t t-if="gtm_purchase_items_json">
+                <script type="text/javascript">
+                    (function () {
+                        'use strict';
+                        window.dataLayer = window.dataLayer || [];
+                        var purchaseData = <t t-out="gtm_purchase_items_json"/>;
+                        /* Deduplication: only fire once per transaction */
+                        var dedupKey = 'gtm_purchase_' + (purchaseData.ecommerce &amp;&amp; purchaseData.ecommerce.transaction_id || '');
+                        if (!sessionStorage.getItem(dedupKey)) {
+                            sessionStorage.setItem(dedupKey, '1');
+                            window.dataLayer.push({ ecommerce: null }); /* Clear previous ecommerce */
+                            window.dataLayer.push(purchaseData);
+                        }
+                    })();
+                </script>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="gtm_purchase_free_registration"
+              name="GTM: purchase dataLayer push (free tickets)"
+              inherit_id="website_event.registration_complete">
+        <xpath expr="//div[hasclass('o_wereg_confirmed')]" position="inside">
+            <t t-if="gtm_purchase_items_json">
+                <script type="text/javascript">
+                    (function () {
+                        'use strict';
+                        window.dataLayer = window.dataLayer || [];
+                        var purchaseData = <t t-out="gtm_purchase_items_json"/>;
+                        /* Deduplication: only fire once per transaction */
+                        var dedupKey = 'gtm_purchase_' + (purchaseData.ecommerce &amp;&amp; purchaseData.ecommerce.transaction_id || '');
+                        if (!sessionStorage.getItem(dedupKey)) {
+                            sessionStorage.setItem(dedupKey, '1');
+                            window.dataLayer.push({ ecommerce: null }); /* Clear previous ecommerce */
+                            window.dataLayer.push(purchaseData);
+                        }
+                    })();
+                </script>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

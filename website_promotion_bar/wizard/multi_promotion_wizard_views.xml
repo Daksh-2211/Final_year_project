@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+    <data>
+        <record id="search_multi_promotion_on_button" model="ir.ui.view">
+            <field name="name">Multi Promotion Search</field>
+            <field name="model">promotion.mapping</field>
+            <field name="arch" type="xml">
+                <search string="Search Promotions">
+                    <field name="promotion_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_multi_promotion_on_button" model="ir.actions.act_window">
+            <field name="name">Successive Promotions</field>
+            <field name="res_model">promotion.mapping</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{
+                'search_default_promotion_id': [active_id],
+                'default_promotion_id': active_id
+            }</field>
+            <field name="search_view_id" ref="search_multi_promotion_on_button"/>
+        </record>
+    </data>
+</odoo>

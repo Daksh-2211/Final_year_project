@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="bb_link_on_invoice_button" model="ir.config_parameter">
+            <field name="key">bb_link_on_invoice_button</field>
+            <field name="value">True</field>
+        </record>
+        <record id="bb_link_on_invoice_qr_code" model="ir.config_parameter">
+            <field name="key">bb_link_on_invoice_qr_code</field>
+            <field name="value">True</field>
+        </record>
+    </data>
+</odoo>

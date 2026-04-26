@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="remove_your_from_header" inherit_id="mail.mail_notification_light">
+
+            <xpath expr="//span[@style='font-size: 10px;']" position="replace">
+                <span style="font-size: 10px;">
+                    <t t-out="model_description or 'document'"/>
+                </span>
+            </xpath>
+        </template>
+    </data>
+</odoo>

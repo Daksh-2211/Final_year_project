@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+
+.sticky-register{
+    position: sticky;
+    top: 55px;
+    z-index: 9999;
+    background: white;
+}
+
+}

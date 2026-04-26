@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="mobile_sticky_registration"
+              inherit_id="website_event.event_description_full">
+
+        <xpath expr="//div[contains(@class,'o_wevent_event_main_cta_block')]" position="attributes">
+            <attribute name="class" add="sticky-register" separator=" "/>
+        </xpath>
+
+    </template>
+
+    <template id="registration_attendee_details_inherit"
+              inherit_id="website_event.registration_attendee_details">
+
+        <xpath expr="//div[@id='modal_attendees_registration']//div[contains(@class,'modal-dialog')]"
+               position="attributes">
+            <attribute name="class" add="modal-dialog-scrollable" separator=" "/>
+        </xpath>
+
+    </template>
+
+</odoo>

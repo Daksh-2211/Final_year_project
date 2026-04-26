@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Sale Order Form View to highlight the note field -->
+    <!--    <record id="view_order_form_note_highlight" model="ir.ui.view">-->
+    <!--        <field name="name">sale.order.form.note.highlight</field>-->
+    <!--        <field name="model">sale.order</field>-->
+    <!--        <field name="inherit_id" ref="sale.view_order_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//notebook" position="before">-->
+    <!--                <div class="o_customer_note_section" invisible="not note" style="margin-bottom: 16px;">-->
+    <!--                    <div style="background: #fff8e1; border: 1px solid #f9a825; border-radius: 6px; padding: 12px 16px;">-->
+    <!--                        <strong style="color: #e65100; font-size: 13px;">-->
+    <!--                            &#128221; Customer Order Note-->
+    <!--                        </strong>-->
+    <!--                        <field name="note"-->
+    <!--                               readonly="1"-->
+    <!--                               style="margin-top: 6px;"-->
+    <!--                               nolabel="1"/>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </xpath>-->
+
+    <!--            <xpath expr="//field[@name='note']" position="attributes">-->
+    <!--                <attribute name="placeholder">Customer instructions, special requests, invoice details...</attribute>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="view_order_form_note_highlight" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.taborcata</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <div class="o_customer_note_section"
+                     invisible="not note"
+                     style="margin-bottom: 16px;">
+                    <div style="background: #fff8e1; border: 1px solid #f9a825; border-radius: 6px; padding: 12px 16px;">
+                        <strong style="color: #e65100; font-size: 13px;">
+                            Customer Order Note
+                        </strong>
+                        <field name="note"
+                               readonly="True"
+                               style="margin-top: 6px;"
+                               nolabel="1"/>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='note']" position="attributes">
+                <attribute name="placeholder">Customer instructions, special requests, invoice details...</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

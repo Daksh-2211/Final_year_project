@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="hidden_events_list" inherit_id="website_event.events_list">
+        <xpath expr="//div[@t-foreach='event_ids']" position="attributes">
+            <attribute name="t-if">
+                request.httprequest.path.startswith('/event_b2b')
+                or event.id not in request.website.event_ids.ids
+            </attribute>
+            <!--            <attribute name="t-if">-->
+            <!--                event.id not in request.website.event_ids.ids-->
+            <!--                and (-->
+            <!--                request.httprequest.path.startswith('/event_b2b')-->
+            <!--                or not event.is_b2b-->
+            <!--                )-->
+            <!--            </attribute>-->
+        </xpath>
+    </template>
+</odoo>

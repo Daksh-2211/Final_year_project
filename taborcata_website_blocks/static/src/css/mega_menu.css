@@ -1,0 +1,217 @@
+.o_mega_menu,
+.o_header_standard,
+.o_header_affixed,
+.navbar,
+.navbar-collapse {
+    overflow: visible !important;
+}
+
+.taborcata-mega-wrapper {
+    position: relative;
+    overflow: visible;
+}
+
+.tabor-top {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tabor-item {
+    font-family: 'FinalSix_Black', sans-serif;
+    position: relative;
+    padding: 10px 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tabor-item a.location {
+    text-decoration: none !important;
+    color: #000000 !important;
+    text-transform: uppercase;
+}
+
+.dropdown-box {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 220px;
+    background: #fff;
+    display: none;
+    padding: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    z-index: 100000;
+}
+
+.tabor-item:hover .dropdown-box {
+    display: block;
+}
+
+.cat.umelecky {
+    color: #057878 !important;
+}
+
+.cat.vedecky {
+    color: #FFA500 !important;
+}
+
+.cat.capoeria {
+    color: #1F801F !important;
+}
+
+.cat.minigolf {
+    color: #1F801F !important;
+}
+
+.cat.lasergame {
+    color: #FF4500 !important;
+}
+
+.cat.spacepark {
+    color: #800080 !important;
+}
+
+.cat.laserarena {
+    color : #6a46c7 !important;
+}
+
+.dropdown-group a.cat {
+    font-family: 'FinalSix_Black', sans-serif;
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    text-transform: uppercase;
+}
+
+.dropdown-group a.cat:hover {
+    opacity: 0.8;
+}
+
+.nav-item:has(> a[href*="carodejnicka-skola"]),
+.nav-item:has(> a[href*="stanovy-tabor-kemp-pandora"]),
+.nav-item:has(> a[href*="clenstvo"]) {
+    display: none !important;
+}
+
+.dropdown-menu .dropdown-item[href*="carodejnicka-skola"] {
+    color: #4B0082 !important;
+    text-transform: uppercase;
+}
+
+.dropdown-menu .dropdown-item[href*="stanovy-tabor-kemp-pandora"] {
+    color: #000080 !important;
+    text-transform: uppercase !important;
+}
+
+.dropdown-menu .dropdown-item[href*="clenstvo"] {
+    color: #006400 !important;
+    text-transform: uppercase !important;
+}
+
+.dropdown-menu .dropdown-item {
+    font-weight: bold;
+    font-family: 'FinalSix_Black', sans-serif !important;
+    padding: 10px 20px !important;
+    font-size: 16px;
+}
+
+@media (min-width: 992px) {
+    .nav-item.dropdown:hover > .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+}
+
+.tabor-mobile {
+    padding: 15px;
+    background: #fff;
+}
+
+.mobile-location {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.mobile-location > a, .mobile-location > .loc-title {
+    display: block;
+    font-weight: bold;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    font-family: 'FinalSix_Black', sans-serif;
+}
+
+.mobile-location .collapse a {
+    display: block;
+    padding: 8px 0 8px 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.mobile-location .collapse a:hover {
+    opacity: 0.7;
+}
+
+.tabor-mobile .accordion-button {
+    font-family: 'FinalSix_Black', sans-serif;
+    font-weight: bold;
+    background: transparent;
+    box-shadow: none;
+}
+
+.tabor-mobile .accordion-button:not(.collapsed) {
+    background: #f8f8f8;
+}
+
+.tabor-mobile .accordion-body a {
+    display: block;
+    padding: 6px 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 1024px) {
+    .desktop-nav-menu {
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        display: flex !important;
+    }
+
+    .desktop-nav-menu .nav-item {
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+    }
+
+    .desktop-nav-menu .nav-link {
+        font-size: 11px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        white-space: nowrap !important;
+    }
+
+    .logo-section {
+        margin-right: 10px !important;
+    }
+
+    .logo-section img {
+        height: 50px !important;
+        width: auto !important;
+    }
+
+    .menu-section {
+        overflow: visible !important;
+    }
+
+    .tabor-item:hover .dropdown-box,
+    .nav-item.dropdown:hover > .dropdown-menu {
+        display: block !important;
+        z-index: 999999 !important;
+    }
+}

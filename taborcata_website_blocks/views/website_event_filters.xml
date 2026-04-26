@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Topbar to filter out B2B tags from the dropdown filters -->
+    <template id="index_topbar_inherit_taborcata" inherit_id="website_event.index_topbar" priority="10000">
+        <!-- Desktop Dropdown Filters -->
+        <xpath expr="//div[hasclass('o_wevent_index_topbar_filters')]//t[@t-foreach='category.tag_ids']//span[@t-if='tag.color']"
+               position="attributes">
+            <attribute name="t-if">tag.color and not tag.is_b2b</attribute>
+        </xpath>
+        <!-- Mobile Offcanvas Filters -->
+        <xpath expr="//div[@id='o_wevent_index_offcanvas']//t[@t-foreach='category.tag_ids']//li[@t-if='tag.color']"
+               position="attributes">
+            <attribute name="t-if">tag.color and not tag.is_b2b</attribute>
+        </xpath>
+    </template>
+
+    <!-- Inherit Events List to filter out B2B tags from event cards -->
+    <template id="events_list_inherit_taborcata" inherit_id="website_event.events_list" priority="10000">
+        <xpath expr="//t[@t-foreach='event.tag_ids.filtered(lambda tag: tag.category_id.website_id == website or not tag.category_id.website_id)']//span[@t-if='tag.color']"
+               position="attributes">
+            <attribute name="t-if">tag.color and not tag.is_b2b</attribute>
+        </xpath>
+    </template>
+</odoo>

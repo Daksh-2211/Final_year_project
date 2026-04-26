@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Invoice PDF Report to show Sale Order Note -->
+    <template id="report_invoice_note" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <t t-set="sale_note" t-value="''" />
+            <t t-foreach="o.invoice_line_ids" t-as="line">
+                <t t-if="line.sale_line_ids and line.sale_line_ids[0].order_id.note">
+                    <t t-set="sale_note" t-value="line.sale_line_ids[0].order_id.note"/>
+                </t>
+            </t>
+            <t t-if="sale_note">
+                <div style="margin-top: 20px; border: 1px solid #e0a800; border-radius: 4px; padding: 12px 16px; background-color: #fffbea;">
+                    <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 12px; color: #856404;">
+                        Customer Order Note:
+                    </p>
+                    <div style="font-size: 11px; color: #333;">
+                        <t t-out="sale_note"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

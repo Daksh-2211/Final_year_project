@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="eset_camps_page" name="ESET Camps Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section
+                        class="s_kickoff s_parallax_no_overflow_hidden o_colored_level pb72 pt256 oe_img_bg o_bg_img_center o_bg_img_origin_border_box"
+                        data-scroll-background-ratio="0" data-snippet="s_kickoff" data-name="Kickoff"
+                        style="background-image: url('/web/image/11775-2b92c900/DSC00122.webp') !important;">
+                    <div class="container">
+                        <h1 class="display-1" style="text-align: center;"><br/></h1>
+                        <h1 class="display-1" style="text-align: center;">
+                            <span class="display-4-fs">
+                                <font class="text-o-color-4">DENNÝ TÁBOR ESET B2B</font>
+                            </span>
+                        </h1>
+                        <h2 style="text-align: center;">
+                            <span class="h4-fs">
+                                <font class="text-o-color-4">ESET</font>
+                            </span>
+                        </h2>
+                    </div>
+                </section>
+
+                <section class="s_features_wall pt56 pb56 o_colored_level s_custom_snippet"
+                         data-snippet="s_features_wall" data-name="Custom Features Wall">
+                    <div class="container">
+                        <div class="row o_grid_mode" data-row-count="21">
+                            <div class="o_grid_item g-height-21 g-col-lg-5 col-lg-5 o_colored_level"
+                                 style="z-index: 1; grid-row-start: 1; grid-column-start: 1; grid-row-end: 22; grid-column-end: 6; --grid-item-padding-y: 0px; --grid-item-padding-x: 16px;">
+                                <h2 class="display-3-fs">
+                                    <font style="color: rgb(255, 156, 0);">Spoznajte tábor ESET</font>
+                                </h2>
+                                <p style="text-align: left;">
+                                    <span class="h5-fs">Vedátorský tábor je miestom, kde deti objavujú svet
+                                        vedy <strong>hravo a zrozumiteľne</strong>. Program prepája <strong>pohyb, hry a
+                                            praktické pokusy</strong>, ktoré podporujú zvedavosť, logické myslenie a
+                                        tímovú spoluprácu.
+                                    </span>
+                                </p>
+                                <p><br/></p>
+                                <p>
+                                    <a class="btn btn-fill-custom text-o-color-4 rounded-circle" href="#Turnusy_Single"
+                                       style="border-width: 1px; border-style: solid; background-color: rgb(255, 156, 0);">
+                                        Turnusy
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="o_grid_item o_grid_item_image g-height-6 g-col-lg-3 col-lg-3 o_colored_level"
+                                 style="z-index: 2; grid-area: 1 / 7 / 7 / 10; --grid-item-padding-y: 0px; --grid-item-padding-x: 16px;">
+                                <img src="/web/image/11769-d24ce414/DSC09357.jpg" alt="" class="img img-fluid o_we_custom_image" loading="lazy"/>
+                            </div>
+                            <div class="o_grid_item g-height-4 g-col-lg-3 col-lg-3 s_col_no_bgcolor"
+                                 style="z-index: 3; grid-area: 7 / 7 / 11 / 10; --grid-item-padding-y: 16px; --grid-item-padding-x: 16px;">
+                                <h3 class="h5-fs"><span class="h4-fs">Interaktívna veda</span></h3>
+                                <p style="text-align: left;">Deti spoznávajú základné princípy <strong>fyziky, techniky, elektriny či energie</strong> prostredníctvom pozorovania aj vlastného zapojenia.</p>
+                            </div>
+                            <div class="o_grid_item o_grid_item_image g-height-6 g-col-lg-3 col-lg-3 o_colored_level"
+                                 style="z-index: 4; grid-area: 12 / 7 / 18 / 10; --grid-item-padding-y: 0px; --grid-item-padding-x: 16px;">
+                                <img src="/web/image/2787-b66e19c9/DSC00596.jpg" alt="" class="img img-fluid o_we_custom_image" loading="lazy"/>
+                            </div>
+                            <div class="o_grid_item g-height-4 g-col-lg-3 col-lg-3 s_col_no_bgcolor"
+                                 style="z-index: 5; grid-area: 18 / 7 / 22 / 10; --grid-item-padding-y: 16px; --grid-item-padding-x: 16px;">
+                                <h3 class="h5-fs"><span class="h4-fs">Podpora sebavedomia</span></h3>
+                                <p>Deti sa učia sa <strong>klásť otázky,</strong> premýšľať nad javmi okolo seba a nachádzať jednoduché <strong>riešenia bez tlaku na výkon.</strong></p>
+                            </div>
+                            <div class="o_grid_item o_grid_item_image g-height-6 g-col-lg-3 col-lg-3 o_colored_level"
+                                 style="z-index: 6; grid-area: 6 / 10 / 12 / 13; --grid-item-padding-y: 0px; --grid-item-padding-x: 16px;">
+                                <img src="/web/image/3159-3568e4e7/IMG-20250808-WA0003.jpg" alt="" class="img img-fluid o_we_custom_image" loading="lazy"/>
+                            </div>
+                            <div class="o_grid_item g-height-4 g-col-lg-3 s_col_no_bgcolor col-lg-3"
+                                 style="z-index: 7; grid-area: 12 / 10 / 16 / 13; --grid-item-padding-y: 16px; --grid-item-padding-x: 16px;">
+                                <h3 class="h5-fs"><span class="h4-fs">Priestor pre objavy</span></h3>
+                                <p>Tábor kombinuje <strong>vedecké objavovanie s pobytom vonku, pohybom a spoločnými aktivitami</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="s_features_grid pt64 o_colored_level pb0 s_custom_snippet"
+                         style="background-color: rgb(255, 156, 0);">
+                    <div class="container">
+                        <div class="row">
+                            <div class="s_col_no_bgcolor pb24 col-lg-11">
+                                <div class="row">
+                                    <div class="col-lg-12 o_colored_level">
+                                        <h3><font class="text-o-color-4">Základné informácie</font></h3>
+                                        <h5 class="lead"><font class="text-o-color-4">max. kapacita 20 detí</font></h5>
+                                        <div class="s_hr pt32 pb-2">
+                                            <hr class="w-100 mx-auto" style="border-top-color: rgb(255, 255, 255);"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="s_features_grid o_colored_level s_custom_snippet pt0 pb40"
+                         style="background-color: rgb(255, 156, 0);">
+                    <div class="container">
+                        <div class="row">
+                            <div class="s_col_no_bgcolor pb24 col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-12 py-3 o_colored_level">
+                                        <i class="fa fa-clock-o rounded s_features_grid_icon float-start flex-shrink-0 bg-o-color-4" style="color: rgb(255, 156, 0);"/>
+                                        <div class="s_features_grid_content mb-0 d-flex flex-column">
+                                            <h4 class="h5-fs"><font class="text-o-color-4">Čas preberania detí</font></h4>
+                                            <p><font class="text-o-color-4">7:45 - 8:15</font></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 py-3 o_colored_level pb0">
+                                        <i class="fa fa-bar-chart-o rounded s_features_grid_icon float-start flex-shrink-0 bg-o-color-4" style="color: rgb(255, 156, 0);"/>
+                                        <div class="s_features_grid_content d-flex flex-column">
+                                            <h4 class="h5-fs"><font class="text-o-color-4">Vekové kategórie</font></h4>
+                                            <p><font class="text-o-color-4">6 - 8 rokov / 9 - 12 rokov</font></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="s_col_no_bgcolor pb24 col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-12 py-3 o_colored_level">
+                                        <i class="fa fa-clock-o rounded s_features_grid_icon float-start flex-shrink-0 bg-o-color-4" style="color: rgb(255, 156, 0);"/>
+                                        <div class="s_features_grid_content d-flex flex-column">
+                                            <h4 class="h5-fs"><font class="text-o-color-4">Čas odovzdávania detí</font></h4>
+                                            <p><font class="text-o-color-4">16:00 - 16:30</font></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 py-3 o_colored_level pb0">
+                                        <i class="fa fa-map-marker rounded s_features_grid_icon float-start flex-shrink-0 bg-o-color-4" style="color: rgb(255, 156, 0);"/>
+                                        <div class="s_features_grid_content d-flex flex-column">
+                                            <h4 class="h5-fs"><font class="text-o-color-4">Miesto konania</font></h4>
+                                            <p><font class="text-o-color-4">Pankúchova 2596/6, 851 04 Bratislava</font></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-snippet="s_events"
+                         class="s_events s_event_upcoming_snippet s_dynamic pt32 pb32 o_colored_level s_event_event_card"
+                         data-name="Udalosti" data-number-of-records="1"
+                         t-att-data-filter-id="filter_id"
+                         data-template-key="website_event.dynamic_filter_template_event_event_card"
+                         data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4"
+                         id="Turnusy_Single">
+                    <div class="container">
+                        <div class="row s_nb_column_fixed">
+                            <section class="s_dynamic_snippet_title oe_unremovable oe_unmovable d-flex flex-column flex-md-row mb-lg-0 pb-3 pb-md-0 o_colored_level justify-content-between">
+                                <div>
+                                    <h4><font class="text-o-color-5">Turnusy</font></h4>
+                                    <p class="lead"><font class="text-o-color-5">Vyberte si podľa dátumu</font></p>
+                                </div>
+                                <div>
+                                    <a title="See All" class="s_dynamic_snippet_main_page_url o_default_snippet_text" href="/event_b2b">See all <i class="fa fa-long-arrow-right ms-2"/></a>
+                                </div>
+                            </section>
+                            <section class="s_dynamic_snippet_content oe_unremovable oe_unmovable o_not_editable col o_colored_level">
+                                <div class="dynamic_snippet_template"></div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

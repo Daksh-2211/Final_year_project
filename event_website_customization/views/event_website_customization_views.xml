@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override main registration button -->
+    <template id="registration_template_inherit" inherit_id="website_event.registration_template">
+        <xpath expr="//button[@data-bs-target='#modal_ticket_registration']" position="replace">
+            <button t-if="event.event_registrations_open" type="button" data-bs-toggle="modal"
+                    data-bs-target="#modal_ticket_registration"
+                    t-attf-class="btn btn-danger {{cta_additional_classes}}">REZERVOVAŤ TERMÍN
+            </button>
+        </xpath>
+    </template>
+
+    <!-- Restoring the original template entirely so it updates correctly over the old record -->
+    <template id="website_event_sidebar_locations_inherit" inherit_id="website_event.event_description_full">
+        <!-- Re-applying the original address replacement -->
+        <xpath expr="//div[@t-if='event.address_id']" position="replace">
+            <div t-if="event.address_ids" class="o_wevent_sidebar_block border-bottom pb-3 mb-4">
+                <h6 class="o_wevent_sidebar_title">Locations</h6>
+                <t t-foreach="event.address_ids" t-as="partner">
+                    <div itemprop="name" class="mb-1" t-field="partner.name"/>
+                    <small class="d-block mb-2" t-esc="partner" t-options='{
+                    "widget": "contact",
+                    "fields": ["address"],
+                    "no_marker": True,
+                    "with_microdata": True
+                }'/>
+                    <small t-esc="partner" class="d-block mb-2" t-options='{
+                    "widget": "contact",
+                    "fields": ["phone", "mobile", "email"]
+                }'/>
+                    <a t-att-href="event._google_map_link(partner)" target="_blank" class="btn btn-light"
+                       title="Get directions">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="align-text-top" role="img"
+                             style="height: 1em; width: 1em">
+                            <rect width="24" height="24" opacity="0"/>
+                            <path role="presentation" fill="currentColor"
+                                  d="M13.67 22h-.06a1 1 0 0 1-.92-.8l-1.54-7.57a1 1 0 0 0-.78-.78L2.8 11.31a1 1 0 0 1-.12-1.93l16-5.33A1 1 0 0 1 20 5.32l-5.33 16a1 1 0 0 1-1 .68z"/>
+                        </svg>
+                        Get directions
+                    </a>
+                    <hr/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Appending our new logic into a completely separate inherit block -->
+    <template id="event_description_full_sticky_registration" inherit_id="website_event.event_description_full">
+        <!-- Add a bottom spacer so the floating button does not overlap footer/content -->
+        <xpath expr="//section[@id='o_wevent_event_main']" position="inside">
+            <div class="pb-5 mb-5 d-block w-100" style="height: 60px;"></div>
+        </xpath>
+
+        <!-- Sticky popup button -->
+        <xpath expr="//t[@t-call='website_event.event_details']" position="inside">
+            <div t-if="event.event_registrations_open and not event.event_registrations_sold_out"
+                 class="position-fixed bottom-0 start-50 translate-middle-x mb-4 z-index-1050 w-100 px-3 px-md-0 d-flex justify-content-center"
+                 style="z-index: 1050; max-width: 400px; pointer-events: none;">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modal_ticket_registration"
+                        class="btn btn-danger btn-lg w-100 shadow-lg"
+                        style="border-radius: 12px; pointer-events: auto;">
+                    REZERVOVAŤ TERMÍN
+                </button>
+            </div>
+        </xpath>
+    </template>
+</odoo>

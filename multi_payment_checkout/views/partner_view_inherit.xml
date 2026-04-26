@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_seller_partner_form_ico" model="ir.ui.view">
+        <field name="name">res.partner.seller.form.ico</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="odoo_marketplace.wk_seller_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="company_registry" placeholder="e.g. ICO 12345678" readonly="parent_id"/>
+                <field name="seller_tax_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

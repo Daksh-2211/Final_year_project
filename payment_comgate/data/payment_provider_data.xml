@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="payment_provider_comgate" model="payment.provider">
+        <field name="name">Comgate</field>
+        <field name="code">comgate</field>
+        <field name="image_128" type="base64" file="payment_comgate/static/description/icon.png"/>
+        <field name="module_id" ref="base.module_payment_comgate"/>
+        <field name="redirect_form_view_id" ref="payment_comgate.redirect_form_comgate"/>
+    </record>
+</odoo>

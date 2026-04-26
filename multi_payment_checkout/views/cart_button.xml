@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="multi_seller_cart_checkout_button" inherit_id="marketplace_seller_wise_checkout.mp_checkout_inherit_cart">
+
+        <xpath expr="//div[@id='oe_structure_website_sale_cart_1']" position="before">
+
+            <t t-set="std_order" t-value="request.website.sale_get_order()"/>
+            <t t-set="seller_ids" t-value="request.session.get('seller_so_ids')"/>
+            <t t-set="seller_orders" t-value="request.env['sale.order'].sudo().browse(seller_ids).filtered('order_line') if seller_ids else False"/>
+
+            <div t-if="(seller_orders) or (std_order and std_order.website_order_line)"
+                 class="row mt-4 mb-5">
+                <div class="col-12">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <a href="/shop/combined_checkout" class="btn btn-primary btn-lg w-100 py-3 fw-bold">
+                                    Pokračovať v Objednávke
+                                    <i class="fa fa-chevron-right ms-2"/>
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+
+    <template id="hide_seller_buttons" inherit_id="marketplace_seller_wise_checkout.mp_checkout_inherit_cart">
+        <xpath expr="//t[@t-foreach='seller_so_ids']//div[hasclass('mt-3')]" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <xpath expr="//t[@t-foreach='seller_so_ids']//div[hasclass('d-xl-none')]" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <xpath expr="//t[@t-foreach='seller_so_ids']//t[@t-call='website_sale.navigation_buttons']" position="replace">
+            </xpath>
+
+
+        <xpath expr="//div[@id='admin_cart_checkout']//t[@t-call='website_sale.navigation_buttons']" position="replace">
+             </xpath>
+    </template>
+
+    <template id="website_sale_total_inherit_dph" inherit_id="website_sale.total">
+        <xpath expr="//tr[@id='order_total_taxes']/td[1]" position="replace">
+            <td colspan="2" class="text-muted border-0 ps-0 pt-0 pb-3">
+                DPH
+            </td>
+        </xpath>
+    </template>
+
+
+    <template id="hide_sort_filter_css_fix" inherit_id="website_event.index_topbar" priority="9999">
+        <xpath expr="//div[hasclass('o_wevent_index_topbar_filters')]" position="inside">
+            <style>
+                .o_wevent_index_topbar_filters > .dropdown:nth-of-type(5) {
+                    display: none !important;
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <template id="filter_shop_attributes" inherit_id="website_sale.products_attributes" name="Filter Sizes and Colors">
+        <xpath expr="//t[@t-foreach='a.value_ids']/div[hasclass('form-check')]" position="attributes">
+            <attribute name="t-if">
+                (a.name != 'Farba' and v.name not in ['104', 'XXXL', 'Detské', 'Dospelácke']) or
+                (a.name == 'Farba' and v.name in ['Biela', 'čierna', 'Skyblue', 'Piesková', 'Cloud Dancer', 'Transformative Teal'])
+            </attribute>
+        </xpath>
+    </template>
+
+    <template id="submenu_inherit_add_cart_icon" inherit_id="website.submenu">
+        <xpath expr="//span[@t-field='submenu.name']" position="replace">
+            <t t-if="submenu.url and '/shop/cart' in submenu.url">
+                <t t-set="combined_total" t-value="request.env['website'].sudo().wk_get_website_cart_qty()"/>
+
+                <div class="position-relative d-inline-block">
+                    <img src="/multi_payment_checkout/static/src/img/web_cart.png"
+                         style="height: 35px; width: 35px; margin-right: 5px; vertical-align: middle; object-fit: contain;"
+                         alt="Cart"/>
+
+                    <span t-if="combined_total"
+                          class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
+                          style="font-size: 0.65rem; padding: 0.25em 0.45em; min-width: 18px; z-index: 10;">
+                        <t t-esc="combined_total"/>
+                    </span>
+                </div>
+            </t>
+            <t t-else="">
+                <span t-field="submenu.name"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="hide_controls_for_recurring_products" inherit_id="website_sale.cart_lines">
+        <xpath expr="//a[hasclass('js_delete_product')]" position="attributes">
+            <attribute name="t-if">not line.product_id.recurring_invoice</attribute>
+        </xpath>
+
+        <xpath expr="//button[hasclass('js_delete_product')]" position="attributes">
+            <attribute name="t-if">not line.product_id.recurring_invoice</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='website_sale_cart_line_quantity']" position="attributes">
+            <attribute name="t-if">not line.product_id.recurring_invoice</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='website_sale_cart_line_quantity']" position="after">
+            <t t-if="line.product_id.recurring_invoice">
+                <t t-set="is_only_membership" t-value="len(website_sale_order.website_order_line) == 1" />
+                <div class="mb-2 d-flex justify-content-end align-items-center">
+                    <span class="d-inline-block border rounded text-center text-muted"
+                          t-attf-style="width: 100px; height: 35px; line-height: 33px; font-weight: bold; #{'margin-right: 15px;' if is_only_membership else ''}">
+                        1
+                    </span>
+                    <t t-if="is_only_membership">
+                        <a href='#' aria-label='Remove from cart' title='Remove from cart' class='js_delete_product no-decoration' t-att-data-product-id="line.product_id.id" t-att-data-line-id="line.id">
+                            <i class='fa fa-trash-o fa-lg text-danger'></i>
+                        </a>
+                    </t>
+                </div>
+                <t t-if="is_only_membership">
+                    <input type="hidden" class="js_quantity form-control quantity" t-att-data-line-id="line.id" t-att-data-product-id="line.product_id.id" value="1" />
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="modify_code_form" inherit_id="website_sale.total" name="Loyalty, coupon, gift card">
+        <xpath expr="//div[@id='cart_total']//table/tr[last()]" position="after">
+            <tr class="oe_website_sale_gift_card">
+                <td colspan="3" class="text-center text-xl-end border-0 p-0">
+                    <div class="o_website_sale_loyalty_form">
+                        <t t-call="website_sale.coupon_form"/>
+                    </div>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+    <template id="modify_code_form_slovak" inherit_id="multi_payment_checkout.modify_code_form">
+        <xpath expr="//div[contains(@class, 'alert-danger')]" position="replace">
+            <div class="alert alert-danger text-start mt16" role="alert" t-if="request.params.get('code_not_available')">
+                Neplatný alebo expirovaný promo kód.
+            </div>
+        </xpath>
+    </template>
+
+    <template id="custom_registration_footer_buttons" inherit_id="website_event.registration_attendee_details">
+        <xpath expr="//div[hasclass('modal-footer')]" position="replace">
+            <div class="modal-footer border-top">
+                <button type="button" class="btn btn-secondary js_goto_event" data-bs-dismiss="modal">Zrušiť</button>
+
+                <button type="submit" class="btn btn-primary" t-if="availability_check">
+                    Pokračovať k platbe
+                </button>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

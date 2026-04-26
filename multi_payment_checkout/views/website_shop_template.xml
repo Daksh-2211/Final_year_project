@@ -1,0 +1,39 @@
+<odoo>
+    <template id="product_price_taborcata_final" inherit_id="website_sale.product_price">
+        <xpath expr="//div[@itemprop='offers']" position="inside">
+            <div class="fw-bold mt-1" style="color: #666; font-size: 0.9rem;">
+                Konečná cena s DPH
+            </div>
+        </xpath>
+    </template>
+
+    <template id="shop_item_price_taborcata" inherit_id="website_sale.products_item">
+        <xpath expr="//div[contains(@class, 'product_price')]" position="inside">
+            <div class="text-muted fw-bold" style="font-size: 0.75rem; color: #FAD100 !important;">
+                vrátane DPH
+            </div>
+        </xpath>
+    </template>
+
+    <template id="modal_ticket_registration_price_vat" inherit_id="website_event_sale.modal_ticket_registration" priority="100">
+        <xpath expr="//div[hasclass('o_wevent_registration_multi_select')]//span[@t-field='ticket.price_reduce']" position="replace">
+            <span class="fs-6"
+                  t-field="ticket.price_reduce_taxinc"
+                  t-options="{'widget': 'monetary', 'from_currency': event.company_id.sudo().currency_id, 'display_currency': website.currency_id}"/>
+        </xpath>
+        <xpath expr="//div[hasclass('o_wevent_registration_multi_select')]//span[@t-else=''][@t-field='ticket.price_reduce_taxinc']" position="attributes">
+            <attribute name="t-else"/>
+            <attribute name="class">d-none</attribute>
+        </xpath>
+
+        <xpath expr="//div[@class='flex-md-grow-1 me-2 text-end']//span[@t-field='tickets.price_reduce']" position="replace">
+            <span class="badge text-bg-secondary fs-6"
+                  t-field="tickets.price_reduce_taxinc"
+                  t-options="{'widget': 'monetary', 'from_currency': event.company_id.sudo().currency_id, 'display_currency': website.currency_id}"/>
+        </xpath>
+        <xpath expr="//div[@class='flex-md-grow-1 me-2 text-end']//span[@t-else=''][@t-field='tickets.price_reduce_taxinc']" position="attributes">
+            <attribute name="t-else"/>
+            <attribute name="class">d-none</attribute>
+        </xpath>
+    </template>
+</odoo>

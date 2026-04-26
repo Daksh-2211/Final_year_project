@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_invoice_document_taborcata" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@name='origin']/strong" position="replace">
+            <strong t-if="o.invoice_origin">Variabilný symbol</strong>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']/span" position="after">
+            <t t-set="sale_line" t-value="line.sale_line_ids[:1]"/>
+            <t t-set="is_subscription" t-value="line.product_id.product_tmpl_id.recurring_invoice"/>
+
+            <t t-if="line.product_id and line.product_id.type != 'consu'">
+                <div class="small text-muted mt-1" style="margin-left: 10px; border-left: 2px solid #eee; padding-left: 5px;">
+
+                    <t t-if="sale_line.event_id and not is_subscription">
+                        <div>
+                            <strong>Termín: </strong>
+                            <span t-field="sale_line.event_id.date_begin" t-options='{"widget": "date"}'/>
+                            <span> - </span>
+                            <span t-field="sale_line.event_id.date_end" t-options='{"widget": "date"}'/>
+                        </div>
+                    </t>
+
+                    <t t-foreach="sale_line.registration_ids" t-as="reg">
+                        <t t-set="child_answer" t-value="reg.registration_answer_ids.filtered(lambda a: 'CHILD' in a.question_id.title.upper() or 'DIEŤA' in a.question_id.title.upper())"/>
+                        <div t-if="child_answer">
+                            <strong>Účastník: </strong>
+                            <span t-out="child_answer[0].value_text_box"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//span[@name='payment_term']" position="after">
+            <div class="mt-3">
+                <t t-set="has_seller" t-value="any(l.product_id.product_tmpl_id.marketplace_seller_id for l in o.invoice_line_ids if l.product_id)"/>
+                <t t-if="has_seller">
+                    <p class="mb-0"><strong>Subjekt nie je platcom DPH</strong></p>
+                </t>
+
+                <p class="mb-0">Faktúra slúži ako doklad o úhrade.</p>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='comment']" position="attributes">
+            <attribute name="t-attf-style">text-align: left !important; font-size: 15px !important;</attribute>
+            <attribute name="class">text-muted mb-3 text-left</attribute>
+        </xpath>
+
+    </template>
+</odoo>

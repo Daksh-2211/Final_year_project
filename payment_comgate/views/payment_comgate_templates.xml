@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="redirect_form_comgate">
+        <form method="post" t-att-action="redirect_url"/>
+    </template>
+</odoo>

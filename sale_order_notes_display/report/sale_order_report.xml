@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Sale Order PDF Report to show Customer Note -->
+    <template id="report_saleorder_note" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//span[@name='order_note']" position="before">
+            <div t-if="doc.note"
+                 style="margin-bottom: 15px; padding: 10px; background-color: #fff3e0; border: 1px solid #fb8c00; border-radius: 5px;">
+                <strong style="color: #bf360c;">📝 Important Note:</strong>
+                <span t-field="doc.note"/>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>

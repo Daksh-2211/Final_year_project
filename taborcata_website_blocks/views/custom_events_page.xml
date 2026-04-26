@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_events_page_index" name="Custom Events Page">
+        <t t-call="website.layout">
+            <t t-set="head">
+                <meta t-if="search_tags" name="robots" content="none"/>
+            </t>
+
+            <div id="wrap" class="o_wevent_index">
+                <!-- Options -->
+                <t t-set="opt_events_list_cards" t-value="is_view_active('website_event.opt_events_list_cards')"/>
+                <t t-set="opt_events_list_columns" t-value="is_view_active('website_event.opt_events_list_columns')"/>
+                
+                <!-- Custom Title replacing the generic 'Events' title could go here if needed -> User wants exact same view, so we include Topbar -->
+                <!-- Topbar -->
+                <t t-call="website_event.index_topbar">
+                    <t t-set="search" t-value="original_search or search or searches['search']"/>
+                </t>
+                
+                <!-- Drag/Drop Area -->
+                <div id="oe_structure_we_index_1" class="oe_structure oe_empty"/>
+                
+                <!-- Content -->
+                <div class="o_wevent_events_list">
+                    <div class="container">
+                        <div class="row">
+                            <div id="o_wevent_index_main_col" t-attf-class="col-md mb-3 #{opt_events_list_columns and 'opt_events_list_columns' or 'opt_events_list_rows'}">
+                                <div class="row g-4 g-lg-3 g-xxl-4">
+                                    <!-- Events List -->
+                                    <t t-call="website_event.events_list"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Drag/Drop Area -->
+                <div id="oe_structure_we_index_2" class="oe_structure oe_empty"/>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+	<data>
+		<record id="wk_seller_all_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['new','approved','shipped','cancel'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+			   name="view_ids"
+			   eval="[
+			   (5, 0, 0),
+			   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+			   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+			   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+		   ]"/>
+		</record>
+		<record id="wk_seller_new_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['new']),('state', '!=', 'draft')]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+			   name="view_ids"
+			   eval="[
+			   (5, 0, 0),
+			   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+			   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+			   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+		   ]"/>
+		</record>
+		<record id="wk_seller_approved_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['approved'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+			   name="view_ids"
+			   eval="[
+			   (5, 0, 0),
+			   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+			   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+			   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+		   ]"/>
+		</record>
+		<record id="wk_seller_shipped_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['shipped'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+			   name="view_ids"
+			   eval="[
+			   (5, 0, 0),
+			   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+			   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+			   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+		   ]"/>
+		</record>
+		<record id="wk_seller_cancelled_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['cancel'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+			   name="view_ids"
+			   eval="[
+			   (5, 0, 0),
+			   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+			   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+			   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+		   ]"/>
+		</record>
+		<record id="wk_seller_pending_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Mp Sale Order</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['pending'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+				name="view_ids"
+				eval="[
+				(5, 0, 0),
+				(0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+				(0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+				(0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+			]"/>
+		</record>
+		<record id="wk_seller_done_sale_order_action" model="ir.actions.act_window">
+			<field name="name">Mp Sale Order</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_mode">list,form</field>
+			<field name="search_view_id" ref="mp_checkout_orders_search_view"/>
+			<field name="domain">[('marketplace_seller_id','!=',False),('mp_order_state','in',['done'])]</field>
+			<field name="context">{'no_edit_mp': 1}</field>
+			<field
+					   name="view_ids"
+					   eval="[
+					   (5, 0, 0),
+					   (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('mp_checkout_orders_kanban_view')}),
+					   (0, 0, {'sequence': 2, 'view_mode': 'form', 'view_id': ref('mp_checkout_orders_form_view')}),
+					   (0, 0, {'sequence': 3, 'view_mode': 'list', 'view_id': ref('mp_checkout_orders_tree_view')}),
+				   ]"/>
+		</record>
+		<record id="inherit_wk_marketplace_dashboard_kanban_view" model="ir.ui.view">
+			<field name="name">marketplace.dashboard.mp.checkout.inherit</field>
+			<field name="model">marketplace.dashboard</field>
+			<field name="inherit_id" ref="odoo_marketplace.wk_marketplace_dashboard_kanban_view"/>
+			<field name="arch" type="xml">
+				<xpath expr='//div[hasclass("container")]/div[hasclass("row","mt-4")]/div[hasclass("col-12","kanban_box")]/div[3]' position="replace">
+					
+					<div class="row" t-if="record.state.raw_value =='order'">
+						<div class="col-lg-4 col-12" invisible = "is_seller == True">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_new_sale_order_action)d"
+							type="action" invisible = "is_seller == True" style="background-color:#00a1ff47;border-radius: 6px;">
+							<div class="ms-3">
+								<div style="color:#00a1ff;text-align:start;" class="o_value me-1"><t t-out="record.count_product_new.raw_value"/></div>
+								<div style="color:#00a1ff;text-align:start;" class="o_label">New</div>
+							</div>
+						</a>
+						</div>
+
+						<div class="col-lg-4 col-12">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_pending_sale_order_action)d"
+							type="action" style="background-color:#edb73e59;border-radius: 6px;">
+							<div class="ms-3">
+								<div style="color:#ECAD0D;text-align:start;" class="o_value me-1"><t t-out="record.count_product_pending.raw_value"/></div>
+								<div style="color:#ECAD0D;text-align:start;" class="o_label">Pending</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-12">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_approved_sale_order_action)d"
+							type="action" style="background-color:#2fa36852;border-radius: 6px;">
+							<div class="ms-3">
+								<div style="color:#2FA368;text-align:start;" class="o_value me-1"><t t-out="record.count_product_approved.raw_value"/></div>
+								<div style="color:#2FA368;text-align:start;" class="o_label">Approved</div>
+							</div>
+						</a>
+						</div>
+
+						<div class="col-lg-4 col-12">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_shipped_sale_order_action)d"
+							type="action" style="background-color:#3720C326;border-radius: 6px;">
+							<div class="ms-3">
+								<div style="color:#3720C3;text-align:start;" class="o_value me-1"><t t-out="record.count_product_rejected.raw_value"/></div>
+								<div style="color:#3720C3;text-align:start;" class="o_label">Shipped</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-12">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_cancelled_sale_order_action)d"
+							type="action" style="background-color:#ed564c38;border-radius: 6px;">
+							<div class="ms-3">
+								<div style="color:#ED564C;text-align:start;" class="o_value me-1"><t t-out="record.count_product_cancelled.raw_value"/></div>
+								<div style="color:#ED564C;text-align:start;" class="o_label">Cancelled</div>
+							</div>
+						</a>
+						</div>
+						<div class="col-lg-4 col-12">
+						<a class="wk_kanban_button_box text-white" name="%(wk_seller_done_sale_order_action)d"
+													type="action" style="background-color:#39A71326;border-radius: 6px;">
+							<field name="count_product_done" invisible="1"/>
+							<div class="ms-3">
+								<div style="color:#39A713;text-align:start;" class="o_value"><t t-esc="record.count_product_done.raw_value"/></div>
+								<div style="color:#39A713;text-align:start;" class="o_label"> Done</div>
+							</div>
+						</a>
+					</div>
+					</div>
+				</xpath>
+
+				<xpath expr='//div[hasclass("container","o_kanban_card_manage_pane","dropdown-menu")]/div[2]' position="replace">
+					<div t-if="record.state.raw_value =='order'" class="row">
+						<div class="col-xs-6 o_kanban_card_manage_section o_kanban_manage_view">
+							<div class="o_kanban_card_manage_title">
+								<span style="color:#a24689">View</span>
+							</div>
+							<div>
+								<a name="%(wk_seller_all_sale_order_action)d" type="action" invisible="is_seller == True" >All</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_new_sale_order_action)d" type="action" invisible="is_seller == True">New Order</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_pending_sale_order_action)d" type="action">Pending Order</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_approved_sale_order_action)d" type="action">Approved Order</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_shipped_sale_order_action)d" type="action">Shipped Order</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_cancelled_sale_order_action)d" type="action">Cancelled Order</a>
+							</div>
+							<div>
+								<a name="%(wk_seller_done_sale_order_action)d" type="action">Done Order</a>
+							</div>
+						</div>
+					</div>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

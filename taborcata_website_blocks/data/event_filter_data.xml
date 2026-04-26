@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="filter_event_b2b_kros_custom" model="ir.filters">
+            <field name="name">B2B KROS Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_kros" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_kros_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B KROS Snippet Filter</field>
+        </record>
+
+        <!-- AUO B2B Filter -->
+        <record id="filter_event_b2b_auo_custom" model="ir.filters">
+            <field name="name">B2B AUO Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_auo" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_auo_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B AUO Snippet Filter</field>
+        </record>
+
+        <!-- Arval B2B Filter -->
+        <record id="filter_event_b2b_arval_custom" model="ir.filters">
+            <field name="name">B2B Arval Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_arval" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_arval_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B Arval Snippet Filter</field>
+        </record>
+
+        <!-- PosAm B2B Filter -->
+        <record id="filter_event_b2b_posam_custom" model="ir.filters">
+            <field name="name">B2B PosAm Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_posam" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_posam_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B PosAm Snippet Filter</field>
+        </record>
+
+        <!-- Yanfeng B2B Filter -->
+        <record id="filter_event_b2b_yanfeng_custom" model="ir.filters">
+            <field name="name">B2B Yanfeng Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_yanfeng" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_yanfeng_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B Yanfeng Snippet Filter</field>
+        </record>
+
+        <!-- ESET B2B Filter -->
+        <record id="filter_event_b2b_eset_custom" model="ir.filters">
+            <field name="name">B2B ESET Filter</field>
+            <field name="model_id">event.event</field>
+            <field name="domain">[('website_published', '=', True), ('b2b_partner_id', '!=', False)]</field>
+            <field name="user_id" eval="False"/>
+            <field name="sort">["date_begin"]</field>
+        </record>
+
+        <record id="website_snippet_filter_b2b_eset" model="website.snippet.filter">
+            <field name="filter_id" ref="taborcata_website_blocks.filter_event_b2b_eset_custom"/>
+            <field name="field_names">name,date_begin,date_end</field>
+            <field name="limit" eval="1"/>
+            <field name="name">B2B ESET Snippet Filter</field>
+        </record>
+
+    </data>
+</odoo>

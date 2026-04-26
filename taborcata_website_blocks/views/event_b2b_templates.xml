@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="event_b2b_topbar" name="B2B Topbar">
+        <div class="container mt-3 mb-4">
+            <div class="o_wevent_index_topbar_filters d-flex align-items-center justify-content-end flex-wrap gap-2 w-100">
+
+                <h2 class="h4 my-0 me-auto pe-sm-4">B2B Events</h2>
+
+                <div class="dropdown">
+                    <a href="#" role="button" class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-calendar me-1"/>
+                        <t t-if="searches.get('date') == 'upcoming'">Upcoming</t>
+                        <t t-else="">All Events</t>
+                    </a>
+                    <div class="dropdown-menu">
+                        <t t-foreach="dates_list" t-as="d">
+                            <a t-att-href="keep('/event_b2b', date=d['id'])"
+                               t-attf-class="dropdown-item d-flex justify-content-between align-items-center #{searches.get('date') == d['id'] and 'active'}">
+                                <t t-out="d['name']"/>
+                                <span class="badge rounded-pill bg-secondary ms-3" t-out="d['count']"/>
+                            </a>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="o_wevent_search d-flex">
+                    <form t-att-action="keep('/event_b2b', search=0)" method="get" class="input-group">
+                        <input type="hidden" name="date" t-att-value="searches.get('date')"/>
+
+                        <input type="text" name="search" class="form-control"
+                               placeholder="Search B2B..." t-att-value="searches.get('search')"/>
+                        <button class="btn btn-primary" type="submit"
+                                style="background-color: #f7e178; border: none; color: black;">
+                            <i class="fa fa-search"/>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="event_b2b_index" name="B2B Events">
+        <t t-call="website.layout">
+            <t t-set="head">
+                <meta t-if="search_tags" name="robots" content="none"/>
+            </t>
+
+            <div id="wrap" class="o_wevent_index">
+                <!-- Options -->
+                <t t-set="opt_events_list_cards" t-value="is_view_active('website_event.opt_events_list_cards')"/>
+                <t t-set="opt_events_list_columns" t-value="is_view_active('website_event.opt_events_list_columns')"/>
+                <!-- Topbar -->
+                <t t-call="taborcata_website_blocks.event_b2b_topbar"/>
+                <!-- Drag/Drop Area -->
+                <div id="oe_structure_we_index_1" class="oe_structure oe_empty"/>
+                <!-- Content -->
+                <div class="o_wevent_events_list">
+                    <div class="container">
+                        <div class="row">
+                            <div id="o_wevent_index_main_col"
+                                 t-attf-class="col-md mb-3 #{opt_events_list_columns and 'opt_events_list_columns' or 'opt_events_list_rows'}">
+                                <div class="row g-4 g-lg-3 g-xxl-4">
+                                    <!-- Events List -->
+                                    <t t-call="website_event.events_list"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

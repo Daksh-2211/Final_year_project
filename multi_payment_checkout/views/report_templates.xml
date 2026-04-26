@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_external_layout_standard_seller" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']" position="before">
+            <t t-set="seller" t-value="o.invoice_line_ids[0].product_id.marketplace_seller_id if o._name == 'account.move' and o.invoice_line_ids and o.invoice_line_ids[0].product_id.marketplace_seller_id else o.order_line[0].product_id.marketplace_seller_id if o._name == 'sale.order' and o.order_line and o.order_line[0].product_id.marketplace_seller_id else False"/>
+        </xpath>
+
+        <xpath expr="//img[@t-if='company.logo']" position="replace">
+            <img t-if="seller and seller.image_1920" class="o_company_logo_small" t-att-src="image_data_uri(seller.image_1920)" alt="Seller Logo"/>
+            <img t-elif="company.logo" class="o_company_logo_small" t-att-src="image_data_uri(company.logo)" alt="Company Logo"/>
+        </xpath>
+
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div class="col-6" name="seller_address">
+                <ul class="list-unstyled" name="seller_address_list">
+                    <li t-if="seller">
+                        <div t-field="seller.self" t-options='{"widget": "contact", "fields": ["name", "address", "phone", "email"], "no_marker": true}'/>
+
+                        <div t-if="seller.seller_tax_id" class="mt-1">
+                            <span>DIČ: </span>
+                            <span t-field="seller.seller_tax_id"/>
+                        </div>
+
+                        <div t-if="seller.vat" class="mt-1">
+                            <t t-esc="seller.country_id.vat_label or 'IČ DPH'"/>:
+                            <span t-field="seller.vat"/>
+                        </div>
+
+                        <div t-if="seller.company_registry" class="mt-1">
+                            <t t-if="o.partner_id.lang == 'sk_SK'">IČO</t>
+                            <t t-else="">ID</t>:
+                            <span t-field="seller.company_registry"/>
+                        </div>
+                    </li>
+
+                    <li t-else="">
+                        <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["name", "address", "phone", "email"], "no_marker": true}'/>
+                        <div t-if="company.vat" class="mt-1">
+                            <t t-esc="company.country_id.vat_label or 'DIČ'"/>:
+                            <span t-field="company.vat"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="event_report_template_full_page_ticket_inherit_taborcata" inherit_id="event.event_report_template_full_page_ticket">
+        <xpath expr="//h4[@t-field='attendee.name'][contains(@class, 'fw-bold')]" position="replace">
+            <h4 class="fw-bold mb-3 pb-2" t-if="attendee">
+                <t t-set="child_name_answer" t-value="attendee.registration_answer_ids.filtered(lambda a: 'DIEŤA: Meno' in a.question_id.title)"/>
+
+                <t t-if="child_name_answer">
+                    <t t-out="child_name_answer[0].value_text_box or child_name_answer[0].value_char or attendee.name"/>
+                </t>
+                <t t-else="">
+                    <t t-out="attendee.name"/>
+                </t>
+            </h4>
+        </xpath>
+    </template>
+
+    <template id="registration_attendee_details_taborcata" inherit_id="website_event.registration_attendee_details">
+        <xpath expr="//div[hasclass('modal-footer')]" position="before">
+            <!-- Optional Products Selection -->
+            <t t-set="optional_products" t-value="request.env['product.template']"/>
+            <t t-foreach="tickets" t-as="ticket_dict">
+                <t t-set="real_ticket" t-value="request.env['event.event.ticket'].sudo().browse(ticket_dict['id'])"/>
+                <t t-if="real_ticket.product_id.optional_product_ids">
+                    <t t-set="optional_products" t-value="optional_products | real_ticket.product_id.optional_product_ids"/>
+                </t>
+            </t>
+
+            <t t-if="optional_products">
+                <div class="px-4 py-3 border-top bg-light">
+                    <h5 class="mb-3">Doplnkové služby</h5>
+                    <t t-foreach="optional_products" t-as="opt_product">
+                        <div class="form-check mb-2">
+                            <input type="checkbox"
+                                   t-attf-name="optional_product_#{opt_product.id}"
+                                   t-attf-id="optional_product_#{opt_product.id}"
+                                   class="form-check-input"/>
+                            <label class="form-check-label w-100 d-flex justify-content-between align-items-center" t-attf-for="optional_product_#{opt_product.id}">
+                                <span>
+                                    <b t-out="opt_product.name"/>
+                                    <span t-if="opt_product.description_sale" class="text-muted small d-block" t-out="opt_product.description_sale"/>
+                                </span>
+                                <span class="badge text-bg-primary fs-6">
+                                    <t t-set="price_info" t-value="opt_product._get_combination_info()"/>
+                                    <t t-out="price_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                </span>
+                            </label>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <t t-if="'Táborčatá, o. z.' in event.sudo().event_ticket_ids.mapped('product_id.marketplace_seller_id.name')">
+                <div class="px-4 py-2 border-top">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               name="taborcata_membership_agree"
+                               id="taborcata_membership_agree"
+                               class="form-check-input"
+                               required="required"/>
+                        <label class="form-check-label small" for="taborcata_membership_agree">
+                            Registráciou na pobytový tábor v <b>Táborčatá, o. z.</b> súhlasím s členstvom v občianskom združení a s pravidlami združenia.
+                            Pravidlá nájdete na tomto odkaze. <a href="https://www.taborcata.sk/clenstvo">Pravidlá</a>.
+                        </label>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

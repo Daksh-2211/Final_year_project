@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Global Marketing Tracking via GTM dataLayer
+        =============================================
+        Injects on every page via website.layout.
+        Events pushed:
+          • page_view        – every page load (FB PageView, Pinterest pagevisit, GA4)
+          • phone_click      – click on tel: links
+          • email_click      – click on mailto: links
+          • contact_form_submit – successful Odoo website form submission
+    -->
+    <template id="gtm_global_tracking"
+              name="GTM: Global tracking dataLayer events"
+              inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="after">
+            <script type="text/javascript">
+                (function () {
+                    'use strict';
+                    window.dataLayer = window.dataLayer || [];
+
+                    /* ── 1. PageView ──────────────────────────────────────── */
+                    window.dataLayer.push({
+                        'event': 'page_view',
+                        'page_path': window.location.pathname,
+                        'page_title': document.title
+                    });
+
+                    /* ── 2. Phone Click (tel:) ────────────────────────────── */
+                    document.body.addEventListener('click', function (e) {
+                        var link = e.target.closest('a[href^="tel:"]');
+                        if (!link) return;
+                        var phone = link.getAttribute('href').replace('tel:', '').trim();
+                        window.dataLayer.push({
+                            'event': 'phone_click',
+                            'phone_number': phone,
+                            'link_url': link.getAttribute('href')
+                        });
+                    });
+
+                    /* ── 3. Email Click (mailto:) ─────────────────────────── */
+                    document.body.addEventListener('click', function (e) {
+                        var link = e.target.closest('a[href^="mailto:"]');
+                        if (!link) return;
+                        var email = link.getAttribute('href').replace('mailto:', '').split('?')[0].trim();
+                        window.dataLayer.push({
+                            'event': 'email_click',
+                            'email_address': email,
+                            'link_url': link.getAttribute('href')
+                        });
+                    });
+
+                    /* ── 4. Contact Form Submission ───────────────────────── */
+                    /*
+                     * Odoo contact forms can either:
+                     *   a) Show an inline success message (same page)
+                     *   b) Redirect to a thank-you page (e.g. /sprava-prijata)
+                     */
+
+                    /* Check if we are ON the thank-you page directly */
+                    var path = window.location.pathname;
+                    if (path.indexOf('/sprava-prijata') === 0 || path.indexOf('/contactus-thank-you') === 0) {
+                        /* Prevent firing on multi-refresh */
+                        if (!sessionStorage.getItem('gtm_form_tracked_url_' + path)) {
+                            sessionStorage.setItem('gtm_form_tracked_url_' + path, '1');
+                            window.dataLayer.push({
+                                'event': 'contact_form_submit',
+                                'form_location': document.referrer || path
+                            });
+                        }
+                    }
+
+                    /* Listen for Odoo form success event (fires before redirect) */
+                    document.addEventListener('submit', function (e) {
+                        var form = e.target.closest &amp;&amp; e.target.closest('.s_website_form');
+                        if (form) {
+                            /* Fallback flag for other redirect URLs */
+                            sessionStorage.setItem('gtm_form_submitted', window.location.pathname);
+                        }
+                    });
+
+                    if (sessionStorage.getItem('gtm_form_submitted')) {
+                        var formPath = sessionStorage.getItem('gtm_form_submitted');
+                        sessionStorage.removeItem('gtm_form_submitted');
+                        window.dataLayer.push({
+                            'event': 'contact_form_submit',
+                            'form_location': formPath
+                        });
+                    }
+
+                    /* Intercept AJAX success for inline success forms */
+                    var origXHROpen = XMLHttpRequest.prototype.open;
+                    var origXHRSend = XMLHttpRequest.prototype.send;
+                    XMLHttpRequest.prototype.open = function (method, url) {
+                        this._gtmUrl = url;
+                        return origXHROpen.apply(this, arguments);
+                    };
+                    XMLHttpRequest.prototype.send = function () {
+                        var xhr = this;
+                        if (xhr._gtmUrl &amp;&amp; (xhr._gtmUrl.indexOf('/website/form') !== -1 ||
+                            xhr._gtmUrl.indexOf('/website_form') !== -1)) {
+                            xhr.addEventListener('load', function () {
+                                if (xhr.status &gt;= 200 &amp;&amp; xhr.status &lt; 300) {
+                                    /* For inline forms (no redirect) */
+                                    if (!window.__gtm_form_tracked) {
+                                        window.__gtm_form_tracked = true;
+                                        window.dataLayer.push({
+                                            'event': 'contact_form_submit',
+                                            'form_location': window.location.pathname
+                                        });
+                                        sessionStorage.removeItem('gtm_form_submitted');
+                                    }
+                                }
+                            });
+                        }
+                        return origXHRSend.apply(this, arguments);
+                    };
+                })();
+            </script>
+        </xpath>
+    </template>
+
+</odoo>

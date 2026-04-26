@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+<odoo>
+    <data noupdate="1">
+        <record id="config_data_1" model="promotion.config.settings">
+            <field name="name">Default Promotion Configuration</field>
+            <field name="is_active">True</field>
+            <field name="background_color">#bccdd4</field>
+            <field name="top_bottom_height">40px</field>
+            <field name="top_bottom_width">100%</field>
+            <field name="left_right_height">450px</field>
+            <field name="left_right_width">70px</field>
+            <field name="allow_cross">True</field>
+            <field name="allow_pop_up">True</field>
+        </record>
+    </data>
+</odoo>

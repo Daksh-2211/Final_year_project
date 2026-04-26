@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2017-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL: https://store.webkul.com/license.html/ -->
+
+<odoo>
+  <data>
+    <template id="website_layout" inherit_id="website.layout" name="Tag Manager Snippet" priority="200">
+      <xpath expr="//meta[@name='generator']" position="before">
+        <script>
+          dataLayer = [{}];
+        </script>
+        <t t-if="website and website.google_tagmanager_key and not editable">
+          &lt;!-- Google Tag Manager --&gt;
+          <script id='tagmanager_code'>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','<t t-esc="website.google_tagmanager_key"/>');
+          </script>
+          &lt;!-- End Google Tag Manager --&gt;
+        </t>
+      </xpath>
+    </template>
+
+    <template id="portal_frontend_layout" inherit_id="portal.frontend_layout" name="Tag Manager Snippet" priority="200">
+      <xpath expr="//div[@id='wrapwrap']" position="before">
+        <t t-if="website and website.google_tagmanager_key and not editable">
+          &lt;!-- Google Tag Manager (noscript) --&gt;
+            <noscript><iframe t-attf-src="https://www.googletagmanager.com/ns.html?id=#{ website.google_tagmanager_key }"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+          &lt;!-- End Google Tag Manager (noscript) --&gt;
+        </t>
+      </xpath>
+    </template>
+
+    <template id="products" inherit_id="website_sale.products" name="Products Tag Manager" priority="200">
+      <xpath expr="//div[@id='wrap']" position="before">
+        <t t-if="website and website.google_tagmanager_key and not editable">
+                <script>
+                  dataLayer.push({
+                    event: "view_item_list",
+                    ecommerce: {
+                      items: [
+                      <t t-set="position" t-value="1"/>
+                      <t t-foreach="products" t-as="product">
+                      <t t-set="combination_info" t-value="product._get_combination_info(only_template=True, add_qty=add_qty or 1)"/>
+                      {
+                        item_id:'<t t-if="product.default_code" t-esc="product.default_code"/> <t t-else="" t-esc="product.name" />',
+                        item_name:'<t t-esc="product.name"/>',
+                        currency: '<t t-esc="website.currency_id.name"/>',
+                        discount: <t t-esc="round(combination_info['list_price']-combination_info['price'],2)"/>,
+                        index:<t t-esc="position" />,
+                        price:<t t-esc="combination_info['list_price']"/>,
+                        quantity: <t t-esc="1"/>
+                      },
+                      <t t-set="position" t-value="position+1"/>
+                      </t>
+                      ]
+                    }
+                  });
+              </script>
+        </t>
+      </xpath>
+    </template>
+
+    <template id="product" inherit_id="website_sale.product" name="Product Tag Manager" priority="200">
+        <xpath expr="//div[@id='wrap']" position="after">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+              <script>
+                dataLayer.push({
+                              event: "view_item",
+                              ecommerce: {
+                                currency: '<t t-esc="website.currency_id.name"/>',
+                                value: <t t-esc="combination_info['price']"/>,
+                                items: [
+                                {
+                                  <t t-set="position" t-value="1"/>
+                                  item_id: '<t t-if="product.default_code" t-esc="product.default_code"/> <t t-else="" t-esc="product.name" />',
+                                  item_name: '<t t-esc="product.name"/>',
+                                  <t t-if="category">item_category: '<t t-esc="category.name"/>',</t>
+                                  discount: <t t-esc="round(combination_info['list_price']-combination_info['price'])"/>,
+                                  index:<t t-esc="position" />,
+                                  price: <t t-esc="combination_info['list_price']"/>,
+                                  quantity: <t t-esc="1"/>
+                                }
+                                ]
+                              }
+                            });
+              </script>
+            </t>
+        </xpath>
+        <xpath expr="//a[@id='add_to_cart']" position="attributes">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+                  <attribute name="t-attf-onclick" separator=" " add="dataLayer.push({
+                    event: 'add_to_cart',
+                    ecommerce: {
+                      currency      : '#{website.currency_id.name}',
+                      value         : #{product._get_combination_info(only_template=True, add_qty=add_qty)['price']},
+                      items: [
+                      {
+                        item_id       : '#{product.default_code if product.default_code else product.name.replace('\'', '\\\'')}',
+                        item_name    : '#{product.name.replace('\'', '\\\'')}',
+                        discount      :  #{round(product._get_combination_info(only_template=True, add_qty=add_qty)['list_price']-product._get_combination_info(only_template=True, add_qty=add_qty)['price'],2)},
+                        item_category : '#{category.name if category else ''}',
+                        price         : #{product._get_combination_info(only_template=True, add_qty=add_qty)['list_price']},
+                        quantity      : 1
+                      }]
+                      }});"
+                  />
+          </t>
+        </xpath>
+    </template>
+
+    <template id="products_item" inherit_id="website_sale.products_item" name="Products item Tag Manager" priority="200">
+      <xpath expr="//div[hasclass('oe_product_image')]/a" position="attributes">
+        <t t-if="website and website.google_tagmanager_key and not editable">
+                <attribute name="t-attf-onclick" separator=" " add="dataLayer.push({
+                              'event': 'select_item',
+                              'ecommerce': {
+                                'items': [
+                                {
+                                  'item_id': '#{product.default_code if product.default_code else product.name.replace('\'', '\\\'')}',
+                                  'item_name': '#{product.name.replace('\'', '\\\'')}',
+                                  'currency': '#{website.currency_id.name}',
+                                  'item_category': '#{category.name if category else ''}',
+                                  'price':#{product._get_combination_info(only_template=True, add_qty=add_qty)['price']},
+                                  'quantity':1,
+                                }
+                                ]
+                              }
+                            }
+                      );" />
+        </t>
+      </xpath>
+      <xpath expr="//form//a[@itemprop='name']" position="attributes">
+        <t t-if="website and website.google_tagmanager_key and not editable">
+                <attribute name="t-attf-onclick" separator=" " add="dataLayer.push({
+                              'event': 'select_item',
+                              'ecommerce': {
+                                'items': [
+                                {
+                                  'item_id': '#{product.default_code if product.default_code else product.name.replace('\'', '\\\'')}',
+                                  'item_name': '#{product.name.replace('\'', '\\\'')}',
+                                  'currency': '#{website.currency_id.name}',
+                                  'item_category': '#{category.name if category else ''}',
+                                  'quantity':1,
+                                }
+                                ]
+                              }
+                            });" />
+        </t>
+      </xpath>
+    </template>
+
+    <template id="cart" inherit_id="website_sale.cart" name="Cart Tag Manager" priority="200">
+        <xpath expr="//div[@id='oe_structure_website_sale_cart_1']" position="after">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+                <script>
+                      dataLayer.push({
+                      event: "begin_checkout",
+                      ecommerce: {
+                        currency: '<t t-esc="website.currency_id.name"/>',
+                         <t t-set="discounted_price" t-value="0.00"/>
+                         <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                            <t t-set="discounted_price" t-value="round(discounted_price+line.price_subtotal,2)"/>
+                          </t>
+                        value: <t t-esc="discounted_price"/>,
+                        items: [
+                         <t t-set="position" t-value="1"/>
+                        <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                        {
+                          item_id: '<t t-if="line.product_id.default_code" t-esc="line.product_id.default_code"/> <t t-else="" t-esc="line.product_id.name" />',
+                          item_name: '<t t-esc="line.product_id.name"/>',
+                          discount: <t t-esc="round(round(line.product_uom_qty*line.price_unit,2)-line.price_subtotal,2)"/>,
+                          index: <t t-esc="position" />,
+                          price:'<t t-esc="round(line.price_unit,2)"/>',
+                          quantity: <t t-esc="line.product_uom_qty"/>,
+                        },
+                        <t t-set="position" t-value="position+1"/>
+                        </t>
+                        ]
+                      }
+                    });
+                </script>
+          </t>
+        </xpath>
+    </template>
+
+    <template id="checkout" inherit_id="website_sale.checkout" name="Checkout Tag Manager" priority="200">
+        <!-- <xpath expr="//div[@id='wrap']" position="after"> -->
+        <xpath expr="//t[@t-call='website_sale.checkout_layout']" position="inside">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+            <script>
+              dataLayer.push({
+                event: "add_shipping_info",
+                ecommerce: {
+                  <t t-set="discounted_price" t-value="0.00"/>
+                  <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                      <t t-set="discounted_price" t-value="round(discounted_price+line.price_subtotal,2)"/>
+                  </t>
+                  currency: '<t t-esc="website.currency_id.name"/>',
+
+                  value: <t t-esc="discounted_price"/>,
+                  items: [
+                 <t t-set="position" t-value="1"/>
+                 <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                 <t t-set="combination_info" t-value="line.product_id.product_tmpl_id._get_combination_info(only_template=True, add_qty=add_qty or 1)"/>
+                  {
+                    item_id: '<t t-if="line.product_id.default_code" t-esc="line.product_id.default_code"/> <t t-else="" t-esc="line.product_id.name" />',
+                    item_name: '<t t-esc="line.product_id.name"/>',
+                    discount: <t t-esc="round(round(line.product_uom_qty*line.price_unit,2)-line.price_subtotal,2)"/>,
+                    index: <t t-esc="position" />,
+                    price:<t t-esc="round(line.price_unit,2)"/>,
+                    quantity: <t t-esc="line.product_uom_qty"/>,
+                  },
+                 <t t-set="position" t-value="position+1"/>
+                 </t>
+                  ]
+                }
+              });
+            </script>
+          </t>
+        </xpath>
+    </template>
+
+    <template id="product_buy_now" inherit_id="website_sale.product_buy_now" name="Buy Now Tag Manager" priority="200">
+        <xpath expr="//a[contains(@t-attf-class, 'o_we_buy_now')]" position="attributes">
+
+          <t t-if="website and website.google_tagmanager_key and not editable">
+            <attribute name="t-attf-onclick" separator=" " add= "dataLayer.push({event: 'add_to_cart',ecommerce: {currency : '#{website.currency_id.name}', value : #{round(product._get_combination_info(only_template=True, add_qty=add_qty)['price'],2)},items: [{item_id : '#{product.default_code if product.default_code else product.name.replace('\'', '\\\'')}',item_name : '#{product.name.replace('\'', '\\\'')}',discount      :  #{round(product._get_combination_info(only_template=True, add_qty=add_qty)['list_price']-product._get_combination_info(only_template=True, add_qty=add_qty)['price'],2)},item_category : '#{category.name if category else ''}',price : #{product._get_combination_info(only_template=True, add_qty=add_qty)['list_price']},quantity : parseInt(document.getElementsByName('add_qty')[0].value)}]}});dataLayer.push({event: 'begin_checkout',ecommerce: { currency : '#{website.currency_id.name}',value : #{product._get_combination_info(only_template=True, add_qty=add_qty)['price']},items: [{item_id: '#{product.default_code if product.default_code else product.name.replace('\'', '\\\'')}',item_name: '#{product.name.replace('\'', '\\\'')}',price:#{product._get_combination_info(only_template=True, add_qty=add_qty)['price']},quantity:parseInt(document.getElementsByName('add_qty')[0].value)},]}});" />
+          </t>
+        </xpath>
+    </template>
+
+    <template id="products_add_to_cart" inherit_id="website_sale.products_add_to_cart" name="Shop cart Tag Manager" priority="200">
+        <xpath expr="//input[@name='product_id']" position="after">
+            <t t-set="gtm_product_variant" t-value="product._create_first_product_variant()"/>
+        </xpath>
+        <xpath expr="//a[hasclass('a-submit')]" position="attributes">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+            <attribute name="t-attf-onclick" separator=" " add= "dataLayer.push({event: 'add_to_cart',ecommerce: {currency : '#{website.currency_id.name}', value : #{round(product._get_combination_info(only_template=True, add_qty=add_qty)['price'],2)},items: [{item_id: '#{gtm_product_variant.default_code if gtm_product_variant.default_code else gtm_product_variant.name}',item_name : '#{gtm_product_variant.default_code}',discount      :  #{round(product._get_combination_info(only_template=True, add_qty=add_qty)['list_price']-product._get_combination_info(only_template=True, add_qty=add_qty)['price'],2)},currency : '#{website.currency_id.name}',item_category : '#{category.name if category else ''}',price : #{product.list_price},quantity : 1}]}});"/>
+          </t>
+        </xpath>
+    </template>
+
+    <template id="payment" inherit_id="website_sale.payment" name="Payment Tag Manager" priority="200">
+        <!-- <xpath expr="//div[@id='wrap']" position="after"> -->
+          <xpath expr="//t[@t-call='website_sale.checkout_layout']" position="inside">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+            <script>
+              dataLayer.push({
+                'event': 'add_payment_info',
+                'ecommerce': {
+                  <t t-set="discounted_price" t-value="0.00"/>
+                  <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                      <t t-set="discounted_price" t-value="round(discounted_price+line.price_subtotal,2)"/>
+                  </t>
+                  currency: '<t t-esc="website.currency_id.name"/>',
+
+                  value: <t t-esc="discounted_price"/>,
+                  items: [
+                  <t t-set="position" t-value="1"/>
+                  <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                  <t t-set="combination_info" t-value="line.product_id.product_tmpl_id._get_combination_info(only_template=True, add_qty=add_qty or 1)"/>
+                    {
+                      item_id: '<t t-if="line.product_id.default_code" t-esc="line.product_id.default_code"/> <t t-else="" t-esc="line.product_id.name" />',
+                      item_name: '<t t-esc="line.product_id.name"/>',
+                      discount: <t t-esc="round(round(line.product_uom_qty*line.price_unit,2)-line.price_subtotal,2)"/>,
+                      index: <t t-esc="position" />,
+                      price:<t t-esc="round(line.price_unit,2)"/>,
+                      quantity: <t t-esc="line.product_uom_qty"/>,
+                    },
+                  <t t-set="position" t-value="position+1"/>
+                  </t>
+                        ]
+                      }
+                    });
+            </script>
+          </t>
+        </xpath>
+    </template>
+    <template id="confirmation" inherit_id="website_sale.confirmation" name="Confirmation Tag Manager" priority="200">
+        <xpath expr="//div[@id='oe_structure_website_sale_confirmation_2']" position="after">
+          <t t-if="website and website.google_tagmanager_key and not editable">
+                   <script>
+                    dataLayer.push({
+                            event: "purchase",
+                            ecommerce: {
+                                affiliation:'<t t-esc="order.team_id.name"/>',
+                                value:  '<t t-esc="order.amount_total"/>',
+                                tax: '<t t-esc="order.amount_tax"/>',
+                                currency: '<t t-esc="website.currency_id.name"/>',
+                                items: [
+                                  <t t-foreach="order.order_line" t-as="line">
+                                  {
+                                  item_id: '<t t-if="line.product_id.default_code" t-esc="line.product_id.default_code"/> <t t-else="" t-esc="line.product_id.name" />',
+                                  item_name: '<t t-esc="line.product_id.name"/>',
+                                  currency: '<t t-esc="website.currency_id.name"/>',  
+                                  price: <t t-esc="line.price_unit"/>,
+                                  quantity: <t t-esc="line.product_uom_qty"/>,
+                                  },
+                                   </t>
+                                ]
+                            }
+                          });
+                       </script>
+          </t>
+        </xpath>
+    </template>
+
+  </data>
+</odoo>

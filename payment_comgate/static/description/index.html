@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    /* centering */
+    .image-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h1,
+    h2 {
+        color: #21B799;
+    }
+</style>
+
+<p><img class="image-center" src="icon.png" alt="image" style="width:300px; height:150px;" /></p>
+
+<h1 id="payment-provider-comgate">Payment Provider: Comgate</h1>
+<p><img src="https://raster.shields.io/badge/license-Other_proprietary-blue.png" alt="License: Other proprietary" /></p>
+<div class="line-block">The module provides integration with payment
+    gateway <a href="https://www.comgate.cz/">https://www.comgate.cz/</a>
+</div>
+<p><strong style="color: #21B799;">Table of contents</strong></p>
+<div class="contents" data-local="">
+    <ul>
+        <li><a href="#comgate-configuration">Comgate
+                configuration</a></li>
+        <li><a href="#odoo-configuration">Odoo
+                configuration</a></li>
+        <li><a href="#payment-methods">Payment methods</a></li>
+        <li><a href="#preauthorization">Preauthorization</a></li>
+        <li><a href="#refund">Refund</a></li>
+        <li><a href="#author">Author</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</div>
+<h2 id="comgate-configuration">Comgate configuration</h2>
+<ol>
+    <li>Go to <em>https://portal.comgate.cz</em></li>
+    <li><em>Integration &gt; Shops settings &gt; "your shop" &gt; Shop
+            connections &gt; Edit</em>
+    </li>
+    <li>Set <em>Enabled payment establishment type</em> to <em>HTTP POST
+            protocol - backend or redirect</em>
+    </li>
+    <li>Set IP whitelist</li>
+    <li>
+        Set URL paid, cancelled, pending:
+        <ul>
+            <li>https://www.yourdomain.com/payment/status?id=${id}&amp;refId=${refId}
+            </li>
+            <li>https://www.yourdomain.com/payment/status?id=${id}&amp;refId=${refId}
+            </li>
+            <li>https://www.yourdomain.com/payment/status?id=${id}&amp;refId=${refId}
+            </li>
+        </ul>
+    </li>
+    <li>
+        Set URL for payment result transfer:
+        <ul>
+            <li>https://www.yourdomain.com/payment/comgate/return
+            </li>
+        </ul>
+    </li>
+</ol>
+<h2 id="odoo-configuration">Odoo configuration</h2>
+<ul>
+    <li>Go to <em>Invoicing &gt; Configuration &gt; Payment Providers &gt;
+            Comgate</em>
+    </li>
+    <li>Fill <em>Key ID and Key Secret</em> obtained from Comgate (<a
+            href="https://www.comgate.cz/objednat">https://www.comgate.cz/objednat</a>)</li>
+</ul>
+<p><img class="image-center" src="1.jpeg" alt="image" /></p>
+<h2 id="payment-methods">Payment methods</h2>
+<div class="line-block">There is option to choose allowed payment
+    methods
+</div>
+<ul>
+    <li>Go to <em>Invoicing &gt; Configuration &gt; Payment Providers &gt;
+            Comgate</em>
+    </li>
+    <li>Press button <em>Update Comgate Methods</em></li>
+    <li>Select supported payment icons or press <em>All methods</em> if you
+        want to support all payment methods
+    </li>
+</ul>
+<p><img class="image-center" src="2.jpeg" alt="image" /></p>
+<h2 id="preauthorization">Preauthorization</h2>
+<div class="line-block">If you want to capture payments you need
+    to:
+</div>
+<ol>
+    <li>Go to <em>Invoicing &gt; Configuration &gt; Payment Providers &gt;
+            Comgate &gt; Configuration</em>
+    </li>
+    <li>Enable <em>Capture Amount Manually</em></li>
+</ol>
+<div class="line-block"><br />
+    After payment user will see that payment was preauthorized<br />
+</div>
+<p><img class="image-center" src="3.jpeg" alt="image" /></p>
+<div class="line-block"><br />
+    You will be able to capture or void transaction<br />
+</div>
+<p><img class="image-center" src="4.jpeg" alt="image" /></p>
+<h2 id="refund">Refund</h2>
+<div class="line-block">Comgate supports partial and full refunds.</div>
+<ul>
+    <li>Go to <em>Sales &gt; Orders</em></li>
+</ul>
+<p><img class="image-center" src="5.jpeg" alt="image" /></p>
+<div class="line-block"><br />
+    Click on payment related to the transaction and press
+    <em>Refund</em><br />
+</div>
+<p><img class="image-center" src="6.jpeg" alt="image" /></p>
+<h2 id="author">Author</h2>
+<ul>
+    <li>Data Dance s.r.o.</li>
+</ul>
+<h2 id="contact">Contact</h2>
+<p><a href="https://www.datadance.eu/">https://www.datadance.eu/</a></p>
+
+</html>

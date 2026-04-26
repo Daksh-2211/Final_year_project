@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+	<data>
+		<record id="mp_seller_checkout_inherit_view_order_form" model="ir.ui.view">
+			<field name="name">sale.order.form.inherit.checkout</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet//field[@name='payment_term_id']" position="after">
+					<field name="marketplace_seller_id" readonly="0" groups="odoo_marketplace.marketplace_officer_group"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="wk_seller_slae_order_line_action" model="ir.actions.act_window">
+            <field name="name">Sale Order Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="path">marketplace-order-lines</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,list,form,graph</field>
+            <field name="domain">[('state','!=','draft'),('marketplace_seller_id','in',['get_marketplace_seller_id()'])]</field>
+            <field name="view_id" ref="odoo_marketplace.wk_seller_product_order_line_tree_view"/>
+            <field name="context">{'search_default_by_marketplace_state': 1, 'no_edit_mp': 1}</field>
+            <field name="search_view_id" ref="odoo_marketplace.wk_seller_product_order_line_search_view"/>
+            <field
+                name="view_ids"
+                eval="[(5, 0, 0),
+                    (0, 0, {'sequence': 1, 'view_mode': 'kanban','view_id': ref('odoo_marketplace.wk_seller_product_order_line_kanban_view')}),
+                    (0, 0, {'sequence': 2, 'view_mode': 'list', 'view_id': ref('odoo_marketplace.wk_seller_product_order_line_tree_view')}),
+                    (0, 0, {'sequence': 3, 'view_mode': 'form', 'view_id': ref('odoo_marketplace.wk_seller_product_order_line_form_view')}),
+                    (0, 0, {'sequence': 4, 'view_mode': 'graph', 'view_id': ref('odoo_marketplace.wk_seller_product_order_line_graph_view')})
+                ]"/>
+        </record>
+
+		<menuitem name="Order Lines"
+            id="odoo_marketplace.wk_seller_dashboard_menu3_sub_menu2"
+            sequence="2"
+			parent="odoo_marketplace.wk_seller_dashboard_menu3" 
+			action="wk_seller_slae_order_line_action" 
+			groups="odoo_marketplace.marketplace_seller_group"/>
+		
+    </data>
+</odoo>

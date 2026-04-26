@@ -1,0 +1,113 @@
+// Taborcata CTA Button Styles - Final Clean Version
+
+@mixin cta-button-logic() {
+    background-color: #f65252 !important;
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    &:hover {
+        background-color: #d43f3f !important;
+        color: #ffffff !important;
+    }
+}
+
+// 1. Navbar CTA (Rectangular)
+.nav-item:has(> a[href*="cta=order_camp"]) {
+    background-color: #f65252 !important;
+    margin-left: 10px !important;
+    display: flex !important;
+    align-items: stretch !important;
+
+    > a.nav-link {
+        @include cta-button-logic();
+        padding: 0 25px !important;
+        height: 100% !important;
+        font-size: 16px !important;
+        border-radius: 0 !important;
+    }
+}
+
+// Fallback for header link
+a.nav-link[href*="cta=order_camp"] {
+    @include cta-button-logic();
+    padding: 10px 25px !important;
+    margin-left: 10px !important;
+    border-radius: 0 !important;
+}
+
+// Floating Bottom CTA (Sticky, Centered)
+.cta-floating-wrapper {
+    position: fixed !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: 30px !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: fit-content !important;
+
+    .cta-order-camp {
+        @include cta-button-logic();
+        font-size: 36px !important;
+        padding: 12px 45px !important;
+        border-radius: 50px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+        margin: 0 !important;
+    }
+}
+
+// ─── MOBILE RESPONSIVE FIXES ───────────────────────────────────────────────
+
+@media (max-width: 991px) {
+
+    // Hide the floating CTA on tablets and phones
+    .cta-floating-wrapper {
+        display: none !important;
+    }
+}
+
+
+// ─── GLOBAL ────────────────────────────────────────────────────────────────
+
+.navbar-nav {
+    align-items: stretch !important;
+}
+
+.o_cookies_bar {
+    z-index: 1060;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Wrapper position fixed hovu joie */
+.cta-floating-wrapper {
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999 !important;
+    position: relative; /* X ne align karva mate */
+}
+
+/* Close button normally hide rakho */
+.js_close_cta {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.2s ease;
+}
+
+/* Hover par j close dekhade */
+.cta-floating-wrapper:hover .js_close_cta {
+    opacity: 1 !important;
+    visibility: visible !important;
+}

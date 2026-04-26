@@ -1,0 +1,16 @@
+.o_recaptcha_legal_terms {
+    display: none !important;
+}
+
+.s_website_form_submit {
+    display: flex;
+    width: 100%;
+}
+
+.field-captcha {
+    margin-bottom: 1.5rem;
+}
+
+.field-captcha .s_website_form_label {
+    font-weight: 500;
+}

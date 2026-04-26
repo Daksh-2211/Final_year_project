@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="account.email_template_edi_credit_note" model="mail.template">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="email_template_edi_credit_note" model="mail.template">
+            <field name="name">Credit Note: Sending</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="email_from">{{ (object.invoice_user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="subject">{{ object.company_id.name }} Credit Note (Ref {{ object.name or 'n/a' }})</field>
+            <field name="description">Sent to customers with the credit note in attachment</field>
+            <field name="body_html" type="html">
+<div style="margin:0px; padding:0px;">
+    <p style="font-size:13px; margin:0px;">
+        Vážená pani / Vážený pán
+        <t t-out="object.partner_id.name"/>,
+        <br/><br/>
+
+        v prílohe Vám posielame dobropis
+        <b t-out="object.name"/>
+
+        <t t-if="object.invoice_origin">
+            (referencia: <t t-out="object.invoice_origin"/>)
+        </t>
+
+        v celkovej hodnote
+        <b t-out="format_amount(object.amount_total, object.currency_id)"/>.
+        <br/><br/>
+
+        V prípade akýchkoľvek otázok nás neváhajte kontaktovať.
+        <br/><br/>
+
+        S prianím pekného dňa,<br/>
+        Vaše <t t-out="object.company_id.name"/>
+
+        <t t-if="not is_html_empty(object.invoice_user_id.signature)">
+            <br/><br/>
+            <t t-out="object.invoice_user_id.signature"/>
+        </t>
+    </p>
+</div>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

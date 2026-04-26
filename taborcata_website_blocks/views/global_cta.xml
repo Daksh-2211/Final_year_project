@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template to inject the CTA button globally -->
+    <template id="global_cta_button" inherit_id="website.layout">
+        <xpath expr="//footer" position="before">
+            <!--            <t t-if="request and hasattr(request, 'httprequest') and request.httprequest.path">-->
+            <t t-if="request and request.httprequest and request.httprequest.path">
+                <t t-set="rp" t-value="request.httprequest.path"/>
+                <t t-set="excluded_paths"
+                   t-value="['/slides', '/event', '/event_b2b', '/kros-camps', '/yanfeng-camps', '/arval-camps', '/auo-camps', '/eset-camps', '/posam-camps', '/register', '/shop', '/shop/payment', '/shop/cart', '/shop/address']"/>
+                <t t-set="is_excluded" t-value="any(p in rp for p in excluded_paths)"/>
+                <t t-if="not is_excluded">
+                    <div id="cta_main_div" class="cta-floating-wrapper d-none d-lg-block">
+                        <span class="js_close_cta"
+                              style="position: absolute; top: -12px; right: -12px; background: white; border: 2px solid #f65252; color: #f65252; border-radius: 50%; width: 26px; height: 26px; display: flex !important; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; z-index: 10001; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            &amp;times;
+                        </span>
+
+                        <a href="/event?cta=order_camp" class="btn cta-order-camp">
+                            OBJEDNAŤ TÁBOR
+                        </a>
+                    </div>
+
+                    <script type="text/javascript">
+                        (function() {
+                        document.addEventListener('click', function(e) {
+                        if (e.target.closest('.js_close_cta')) {
+                        var element = document.getElementById('cta_main_div');
+                        if (element) {
+                        element.style.setProperty('display', 'none', 'important');
+                        }
+                        }
+                        });
+                        })();
+                    </script>
+                </t>
+            </t>
+
+            <!-- Simplified exclusion to avoid 500 error -->
+            <!--            <t t-if="request and hasattr(request, 'httprequest') and request.httprequest.path">-->
+            <!--                <t t-set="rp" t-value="request.httprequest.path"/>-->
+            <!--                <t t-if="'/slides' not in rp and '/event_b2b' not in rp and '/kros-camps' not in rp and '/yanfeng-camps' not in rp and '/arval-camps' not in rp and '/auo-camps' not in rp and '/eset-camps' not in rp and '/posam-camps' not in rp and '/register' not in rp">-->
+            <!--                    &lt;!&ndash; Floating CTA (Bottom Center) &ndash;&gt;-->
+            <!--                    <div class="cta-floating-wrapper">-->
+            <!--                        <a href="/event?cta=order_camp" class="btn cta-order-camp">-->
+            <!--                            OBJEDNAŤ TÁBOR-->
+            <!--                        </a>-->
+            <!--                    </div>-->
+            <!--                </t>-->
+            <!--            </t>-->
+            <!--            -->
+
+        </xpath>
+    </template>
+</odoo>

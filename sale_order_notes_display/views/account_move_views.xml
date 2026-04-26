@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Extend Invoice Form View to show linked Sale Order Note  -->
+    <record id="view_move_form_sale_note" model="ir.ui.view">
+        <field name="name">account.move.form.sale.note</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="before">
+                <div class="o_sale_order_note_banner"
+                     invisible="not sale_order_note or sale_order_note in ['', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;']"
+                     style="margin-bottom: 16px;">
+
+                    <div style="background: #fff3e0; border: 1px solid #fb8c00; border-radius: 6px; padding: 12px 16px;">
+                        <strong style="color: #bf360c; font-size: 13px;">⚠ Customer Note (from Sale Order)</strong>
+                        <field name="sale_order_note" readonly="1" nolabel="1" style="margin-top: 6px;"/>
+                    </div>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

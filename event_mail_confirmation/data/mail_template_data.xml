@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="ir.model.data" name="write">
+        <value model="ir.model.data" eval="[ref('event.event_subscription')]"/>
+        <value eval="{'noupdate': False}"/>
+    </function>
+    <record id="event.event_subscription" model="mail.template">
+        <field name="name">Potvrdenie registrácie - DENNÉ TÁBORY - BA</field>
+        <field name="model_id" ref="event.model_event_registration"/>
+        <field name="subject">Potvrdenie registrácie: {{ object.event_id.name }}</field>
+
+        <field name="report_template_ids" eval="[(4, ref('event.action_report_event_registration_full_page_ticket'))]"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: 'Arial', sans-serif;">
+                <p>Dobrý deň, <strong><t t-out="object.partner_id.name"/></strong>,</p>
+                <p>úspešne sme prijali Vašu prihlášku na náš tábor <strong><t t-out="object.event_id.name"/></strong>. Ďakujeme za prejavenú dôveru, veľmi si vážime, že ste sa rozhodli zveriť Vaše dieťa práve do našich rúk.</p>
+                <p>Naším cieľom je vytvoriť bezpečné a inšpiratívne prostredie, kde si každé dieťa nájde svoje miesto. V prílohe Vám posielame <strong>základný prehľad informácií</strong>, aby ste mali dôležité termíny a zoznam potrieb hneď po ruke.</p>
+                <p><strong>Kedy čakať ďalšie správy?</strong> Presné organizačné detaily a finálne pokyny k nástupu Vám doručíme e-mailom <strong>7 dní pred začiatkom tábora</strong>.</p>
+                <p><strong>Miesto konania tábora:</strong> <t t-out="object.event_id.address_id.contact_address or 'Bude upresnené'"/><br/>
+                <strong>Dátum konania tábora:</strong> <t t-out="object.event_id.date_begin" t-options='{"widget": "date"}'/> - <t t-out="object.event_id.date_end" t-options='{"widget": "date"}'/></p>
+                <p>Tešíme sa na Vás!</p>
+                <p>S pozdravom,<br/><strong>Tím Táborčatá</strong></p>
+                <hr style="border: none; border-top: 1px solid #ccc; margin: 20px 0;"/>
+                <p style="font-size: 12px; color: #555;">V prípade akýchkoľvek otázok nás neváhajte kontaktovať:</p>
+                <p style="font-size: 12px; color: #555;">
+                    <strong>Mail:</strong> <a href="mailto:taborcata@taborcata.sk">taborcata@taborcata.sk</a><br/>
+                    <strong>Phone:</strong> <a href="tel:+421948748999">+421 948 748 999</a>
+                </p>
+                <p style="font-size: 10px; color: #999;"><em>Mail je automaticky generovaný. Prosíme, neodpovedajte priamo na tento e-mail.</em></p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- "License URL : <https://store.webkul.com/license.html/>" -->
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_promotion_mapping_form">
+            <field name="name">Promotion Mapping Form</field>
+            <field name="model">promotion.mapping</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="id" invisible="1"/>
+                        <field name="promotion_ids" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="%(action_multi_promotion_on_button)d" type="action" icon="fa-list-alt" invisible="not id or promotion_ids == []">Promotions
+                            </button>
+                            <button class="oe_stat_button" name="promotion_publish_button" type="object" icon="fa-globe" invisible="not id">
+                                <div class="o_stat_info">
+                                    <field name="publish" invisible="1"/>
+                                    <span class="o_stat_text" invisible="publish"> Publish</span>
+                                    <span class="o_stat_text text-danger" invisible="not publish"> Unpublish</span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Published" bg_color="bg-success" invisible="not publish"/>
+                        <widget name="web_ribbon" title="Unpublished" bg_color="bg-danger" invisible="publish" />
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="page_id" domain="[('arch_db', 'like', '&lt;t t-call=&quot;website.layout&quot;&gt;')]" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="position"/>
+                                <field name="visibility"/>
+                                <field name="view_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <label for="date_start" string="Promotion Duration"/>
+                                <div>
+                                    <field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+                                </div>
+                                <field name="is_multi_promotion" invisible="position in [False, 'left', 'right']"/>
+                                <field name="promotion_id" domain="[('page_id', '=', page_id), ('position', '=', position), ('is_multi_promotion', '=', False), ('id', '!=', id)]" invisible="not is_multi_promotion or position in [False, 'left', 'right']" required="is_multi_promotion"  options="{'no_create': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Content">
+                                <field name="content" widget="html"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_promotion_mapping_list">
+            <field name="name">Promotion Mapping List</field>
+            <field name="model">promotion.mapping</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="visibility"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="publish"/>
+                    <field name="is_multi_promotion"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_promotion_mapping">
+            <field name="name">Mapping</field>
+            <field name="res_model">promotion.mapping</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_webkul_promotion_bar"
+            name="Promotion Mapping"
+            sequence="217"
+            parent="website.menu_website_configuration" groups="base.group_user"/>
+
+        <menuitem id="submenu_webkul_promotion_bar"
+            name="Promotion Mapping"
+            sequence="20"
+            parent="menu_webkul_promotion_bar"
+            action="website_promotion_bar.action_promotion_mapping"
+            />    
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_form_inherit_taborcata_website_blocks" model="ir.ui.view">
+        <field name="name">event.event.form.inherit.taborcata_website_blocks</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="is_b2b" invisible="True"/>
+                <field name="b2b_partner_id"/>
+                <field name="b2b_camp_page" invisible="not b2b_partner_id"/>
+                <!--                <field name="b2b_camp_url" invisible="not b2b_camp_page" readonly="True"-->
+                <!--                       widget="CopyClipboardChar" string="B2B Page URL"/>-->
+            </field>
+        </field>
+    </record>
+
+    <!-- Add is_b2b to the inline tag_ids list inside the Event Tag Category form -->
+    <record id="event_tag_category_view_form_inherit_taborcata" model="ir.ui.view">
+        <field name="name">event.tag.category.view.form.inherit.taborcata</field>
+        <field name="model">event.tag.category</field>
+        <field name="inherit_id" ref="event.event_tag_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']//field[@name='color']" position="after">
+                <field name="is_b2b" string="B2B" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
