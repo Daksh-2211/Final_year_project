@@ -5,7 +5,7 @@ pipeline {
         ECR_REPO     = "odoo-deploy"
         IMAGE_TAG    = "${BUILD_NUMBER}"
         SONAR_HOST   = "http://sonarqube:9000"
-        SONAR_TOKEN  = credentials('sonar-token')
+        SONAR_TOKEN  = credentials('SONAR_TOKEN')
     }
     stages {
         stage('Checkout') {
