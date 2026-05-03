@@ -1,20 +1,16 @@
 pipeline {
     agent any
-
     environment {
-        ECR_REGISTRY = "583931059035.dkr.ecr.ap-south-1.amazonaws.com"
-        ECR_REPO     = "odoo-app"
+        ECR_REGISTRY = "public.ecr.aws/e8i6o3e4"
+        ECR_REPO     = "odoo-deploy"
         IMAGE_TAG    = "${BUILD_NUMBER}"
-        SONAR_HOST   = "http://localhost:9000"
+        SONAR_HOST   = "http://sonarqube:9000"
         SONAR_TOKEN  = credentials('sonar-token')
     }
-
     stages {
-
         stage('Checkout') {
             steps { checkout scm }
         }
-
         stage('OWASP Dependency Check') {
             steps {
                 sh '''
@@ -40,7 +36,6 @@ pipeline {
                 }
             }
         }
-
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -51,7 +46,6 @@ pipeline {
                 }
             }
         }
-
         stage('SonarQube Quality Gate') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
@@ -59,13 +53,11 @@ pipeline {
                 }
             }
         }
-
         stage('Docker Build') {
             steps {
                 sh "docker build -t ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} ."
             }
         }
-
         stage('Trivy Image Scan') {
             steps {
                 sh """
@@ -77,37 +69,29 @@ pipeline {
                 """
             }
         }
-
         stage('Push to ECR') {
             steps {
                 sh """
-                aws ecr get-login-password --region ap-south-1 | \
-                  docker login --username AWS --password-stdin ${ECR_REGISTRY}
-
+                aws ecr-public get-login-password --region us-east-1 | \
+                  docker login --username AWS --password-stdin public.ecr.aws
                 docker push ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
-
                 docker tag ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} \
                            ${ECR_REGISTRY}/${ECR_REPO}:latest
                 docker push ${ECR_REGISTRY}/${ECR_REPO}:latest
                 """
             }
         }
-
         stage('Deploy') {
             steps {
                 sh """
                 docker pull ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
-                docker stop odoo-app || true
-                docker rm odoo-app   || true
-                docker run -d \
-                  --name odoo-app \
-                  -p 8069:8069 \
-                  ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
+                cd /home/ubuntu/odoo-tobarcota
+                sed -i 's|image: taborcata:.*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|' docker-compose.yml
+                docker compose up -d --force-recreate odoo
                 """
             }
         }
     }
-
     post {
         failure { echo "Pipeline failed — check scan reports" }
         success { echo "Deployed: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}" }
