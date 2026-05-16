@@ -9,9 +9,6 @@ pipeline {
 
         // FIXED PROJECT PATH
         PROJECT_DIR  = "/home/ubuntu/odoo-tobarcata"
-
-        // FIXED NETWORK NAME
-        DOCKER_NET   = "odoo-tobarcata_odoo-net"
     }
 
     stages {
@@ -37,7 +34,7 @@ pipeline {
                         sh """
                         ${scannerHome}/bin/sonar-scanner \
                         -Dsonar.javascript.node.maxspace=4096 \
-                        -Dsonar.exclusions=node_modules/** 
+                        -Dsonar.exclusions=node_modules/**
                         """
                     }
                 }
@@ -95,45 +92,19 @@ pipeline {
                 sh """
                 set -e
 
-                echo "Pull latest image..."
-                docker pull ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
-
-                echo "Checking project directory..."
-                ls -la ${PROJECT_DIR}
-
-                echo "Starting PostgreSQL..."
+                echo "Moving to project directory..."
                 cd ${PROJECT_DIR}
 
-                docker compose up -d db
+                echo "Updating image in docker-compose.yml..."
+                sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPO}:.*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|" docker-compose.yml
 
-                echo "Waiting for DB..."
-                sleep 20
+                echo "Pulling latest images..."
+                docker compose pull
 
-                echo "Ensuring Docker network exists..."
-                docker network inspect ${DOCKER_NET} >/dev/null 2>&1 || \
-                docker network create ${DOCKER_NET}
+                echo "Recreating containers with new image..."
+                docker compose up -d --force-recreate
 
-                echo "Removing old Odoo container..."
-                docker stop odoo18_tobarcata_web || true
-                docker rm odoo18_tobarcata_web || true
-
-                echo "Starting new Odoo container..."
-
-                docker run -d \
-                  --name odoo18_tobarcata_web \
-                  --network ${DOCKER_NET} \
-                  --restart always \
-                  -p 8070:8069 \
-                  -e HOST=db \
-                  -e USER=odoo \
-                  -e PASSWORD=odoo \
-                  -v odoo-tobarcata_odoo_data:/var/lib/odoo \
-                  -v ${PROJECT_DIR}/addons:/mnt/extra-addons \
-                  -v ${PROJECT_DIR}/enterprise-addons:/mnt/enterprise-addons \
-                  ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} \
-                  odoo -c /etc/odoo/odoo.conf -d tobarcota_db
-
-                echo "Deployment completed."
+                echo "Deployment completed successfully."
                 """
             }
         }
