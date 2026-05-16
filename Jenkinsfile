@@ -75,7 +75,6 @@ pipeline {
                   -e USER=odoo \
                   -e PASSWORD=odoo \
                   -v odoo-tobarcota_odoo_data:/var/lib/odoo \
-                  -v /home/ubuntu/odoo-tobarcota/odoo.conf:/etc/odoo/odoo.conf \
                   -v /home/ubuntu/odoo-tobarcota/addons:/mnt/extra-addons \
                   -v /home/ubuntu/odoo-tobarcota/enterprise-addons:/mnt/enterprise-addons \
                   ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} \
