@@ -5,9 +5,10 @@ pipeline {
         ECR_REGISTRY = "public.ecr.aws/e8i6o3e4"
         ECR_REPO     = "odoo-deploy"
         IMAGE_TAG    = "${BUILD_NUMBER}"
+
         SONAR_TOKEN  = credentials('SONAR_TOKEN')
 
-        // EC2 deployment target
+        // EC2 Deployment
         EC2_HOST     = "13.201.2.114"
         EC2_USER     = "ubuntu"
     }
@@ -63,10 +64,10 @@ pipeline {
             steps {
                 sh """
                 trivy image \
-                  --exit-code 0 \
-                  --severity HIGH,CRITICAL \
-                  --format table \
-                  ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
+                --exit-code 0 \
+                --severity HIGH,CRITICAL \
+                --format table \
+                ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
                 """
             }
         }
@@ -91,35 +92,43 @@ pipeline {
         stage('Deploy on EC2 via SSH') {
             steps {
                 sh """
-                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
-                set -e
+ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} <<EOF
+set -e
 
-                echo "🚀 Moving to project directory..."
-                cd /home/ubuntu/odoo-tobarcata
+echo "🚀 Moving to project directory..."
+cd /home/ubuntu/odoo-tobarcata
 
-                echo "🔄 Updating docker-compose image..."
-                sed -i 's|odoo-deploy:.*|odoo-deploy:${IMAGE_TAG}|' docker-compose.yml
+echo "🔄 Updating docker-compose image..."
+sed -i 's|image: .*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|' docker-compose.yml
 
-                echo "📥 Pulling latest image..."
-                docker compose pull
+echo "📥 Pulling latest image..."
+docker compose pull
 
-                echo "♻️ Restarting containers..."
-                docker compose up -d --force-recreate
+echo "♻️ Restarting containers..."
+docker compose up -d --force-recreate
 
-                echo "✅ Deployment successful!"
-                EOF
+echo "🧹 Removing unused Docker images..."
+docker image prune -af
+
+echo "✅ Deployment successful!"
+EOF
                 """
             }
         }
     }
 
     post {
+
         success {
-            echo "Successfully deployed: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}"
+            echo "✅ Successfully deployed: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}"
         }
 
         failure {
-            echo "Pipeline failed. Check logs carefully."
+            echo "❌ Pipeline failed. Check logs carefully."
+        }
+
+        always {
+            cleanWs()
         }
     }
 }
