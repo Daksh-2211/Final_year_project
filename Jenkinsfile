@@ -64,9 +64,22 @@ pipeline {
             steps {
                 sh """
                 docker pull ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
-                cd /home/ubuntu/odoo-tobarcota
-                sed -i 's|image: taborcata:.*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|' docker-compose.yml
-                docker compose up -d --force-recreate odoo
+                docker stop odoo18_tobarcota_web || true
+                docker rm odoo18_tobarcota_web || true
+                docker run -d \
+                  --name odoo18_tobarcota_web \
+                  --network odoo-tobarcota_odoo-net \
+                  --restart always \
+                  -p 8070:8069 \
+                  -e HOST=db \
+                  -e USER=odoo \
+                  -e PASSWORD=odoo \
+                  -v odoo-tobarcota_odoo_data:/var/lib/odoo \
+                  -v /home/ubuntu/odoo-tobarcota/odoo.conf:/etc/odoo/odoo.conf \
+                  -v /home/ubuntu/odoo-tobarcota/addons:/mnt/extra-addons \
+                  -v /home/ubuntu/odoo-tobarcota/enterprise-addons:/mnt/enterprise-addons \
+                  ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG} \
+                  odoo -c /etc/odoo/odoo.conf -d tobarcota_db
                 """
             }
         }
