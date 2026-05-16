@@ -7,8 +7,9 @@ pipeline {
         IMAGE_TAG    = "${BUILD_NUMBER}"
         SONAR_TOKEN  = credentials('SONAR_TOKEN')
 
-        // FIXED PROJECT PATH
-        PROJECT_DIR  = "/home/ubuntu/odoo-tobarcata"
+        // EC2 deployment target
+        EC2_HOST     = "13.201.2.114"
+        EC2_USER     = "ubuntu"
     }
 
     stages {
@@ -87,31 +88,32 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy on EC2 via SSH') {
             steps {
                 sh """
+                ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} << 'EOF'
                 set -e
 
-                echo "Moving to project directory..."
-                cd ${PROJECT_DIR}
+                echo "🚀 Moving to project directory..."
+                cd /home/ubuntu/odoo-tobarcata
 
-                echo "Updating image in docker-compose.yml..."
-                sed -i "s|image: ${ECR_REGISTRY}/${ECR_REPO}:.*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|" docker-compose.yml
+                echo "🔄 Updating docker-compose image..."
+                sed -i 's|odoo-deploy:.*|odoo-deploy:${IMAGE_TAG}|' docker-compose.yml
 
-                echo "Pulling latest images..."
+                echo "📥 Pulling latest image..."
                 docker compose pull
 
-                echo "Recreating containers with new image..."
+                echo "♻️ Restarting containers..."
                 docker compose up -d --force-recreate
 
-                echo "Deployment completed successfully."
+                echo "✅ Deployment successful!"
+                EOF
                 """
             }
         }
     }
 
     post {
-
         success {
             echo "Successfully deployed: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}"
         }
