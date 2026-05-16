@@ -64,8 +64,14 @@ pipeline {
             steps {
                 sh """
                 docker pull ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}
+
+                # Ensure DB and network are up
+                cd /home/ubuntu/odoo-tobarcota && docker compose up -d db
+                sleep 10
+
                 docker stop odoo18_tobarcota_web || true
                 docker rm odoo18_tobarcota_web || true
+
                 docker run -d \
                   --name odoo18_tobarcota_web \
                   --network odoo-tobarcota_odoo-net \
