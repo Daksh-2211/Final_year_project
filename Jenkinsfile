@@ -81,12 +81,12 @@ set -e
 echo "🚀 Moving to project directory..."
 cd /home/ubuntu/odoo-tobarcata
 echo "🔄 Updating Odoo image tag in docker-compose..."
-# sed -i '/image: ${ECR_REGISTRY}/s|image: .*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|' docker-compose.yml
+sed -i '/image: ${ECR_REGISTRY}/s|image: .*|image: ${ECR_REGISTRY}/${ECR_REPO}:${IMAGE_TAG}|' docker-compose.yml
 echo "📥 Pulling latest image..."
-# docker compose pull
+docker compose pull
 echo "♻️ Restarting containers..."
-docker compose restart
-# docker compose up -d --force-recreate
+#docker compose restart
+docker compose up -d --force-recreate
 echo "🧹 Removing unused Docker images..."
 # docker image prune -af
 echo "✅ Deployment successful!"
