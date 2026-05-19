@@ -209,9 +209,8 @@
             <field name="website_id" eval="1"/>
             <field name="sequence" eval="30"/>
             <field name="group_ids" eval="[(4, ref('base.group_no_one'))]"/>
-        </record>
-
-        <!-- <record id="menu_objednat_tabor_btn" model="website.menu">
+	</record>
+	<!-- <record id="menu_objednat_tabor_btn" model="website.menu">
             <field name="name">OBJEDNAŤ TÁBOR</field>
             <field name="url">/event?cta=order_camp</field>
             <field name="parent_id" eval="4"/>
